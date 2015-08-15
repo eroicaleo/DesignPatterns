@@ -7,6 +7,10 @@ public class RubberDuck extends Duck {
     public void quack() {
         System.out.println("Squeak Squeak Squeak!");
     }
+    @Override
+    public void fly() {
+        System.out.println("RubberDuck doesn't fly!");
+    }
     public static void main(String[] args) {
         Duck d = new RubberDuck();
         d.swim();
