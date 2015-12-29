@@ -9,3 +9,6 @@
 * `Double Shift`: Search anywhere.
 * `Alt+Home`: Navigation bar.
 * `Alt+0`: show messages.
+* `Ctrl+F9`: Make the project.
+* `Shift+F9`: Debug the code.
+* `Shift+10`: run the code.

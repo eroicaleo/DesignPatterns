@@ -63,3 +63,52 @@ With our new design, the `Duck` subclasses will use a behavior represented by an
 of the behavior (in other words, the specific concrete behavior coded in the class
 that implements the `FlyBehaviour` and `QuackBehaviour`) won't be locked into the
 `Duck` subclass.
+
+**Integrating the duck behavior**
+
+The key is that a Duck will **delegate** its flying and quacking behavior, instead
+of using quacking and flying methods defined in the `Duck` class.
+
+```java
+public class Duck {
+    QuackBehavior quackBehavior;
+    FlyBehavior flyBehavior;
+
+    public void performQuack() {
+        quackBehavior.quack();
+    }
+
+    public void performFly() {
+        flyBehavior.fly();
+    }
+
+    public void swim() {
+        System.out.println("All ducks swim, even decoys!");
+    }
+
+    public void setFlyBehavior(FlyBehavior fb) {
+        flyBehavior = fb;
+    }
+
+    public void setQuackBehavior(QuackBehavior qb) {
+        quackBehavior = qb;
+    }
+}
+
+public class ModelDuck extends Duck {
+    ModelDuck() {
+        flyBehavior = new FlyNoWay();
+        quackBehavior = new Quack();
+    }
+
+    public void display() {
+        System.out.println("I am a model duck!");
+    }
+}
+```
+The only problem with our current implementation is that: we should not programming
+to an interface, but we are doing in that constructor, we are making a new instance
+of a concrete `Quack` implementation class.
+
+We are doing a poor job of initializing the instance variables in a flexible way.
+We will fix it later using more patterns.
