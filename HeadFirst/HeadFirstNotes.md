@@ -1,5 +1,9 @@
+<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-# Chapter 01 Welcome to design patterns
+- [Chapter 01 Welcome to design patterns: Strategy Pattern](#chapter-01-welcome-to-design-patterns-strategy-pattern)
+<!-- /TOC -->
+
+# Chapter 01 Welcome to design patterns: Strategy Pattern
 
 The duck problem, inheritance is not a solution because some ducks don't fly,
 some ducks even don't quack.
@@ -106,9 +110,31 @@ public class ModelDuck extends Duck {
     }
 }
 ```
+
 The only problem with our current implementation is that: we should not programming
 to an interface, but we are doing in that constructor, we are making a new instance
 of a concrete `Quack` implementation class.
 
 We are doing a poor job of initializing the instance variables in a flexible way.
 We will fix it later using more patterns.
+
+**The big pictures on encapsulated behaviors**
+
+Instead of thinking of the duck behaviors as *a set of behaviors*, we'll start
+think of them as a *family of algorithms*. in the SimUDuck design, the algorithms
+represent things a duck would do (different ways of quacking or flying).
+
+**Design Principles:** *Favor composition over inheritance*.
+
+Creating systems using composition gives you a lot more flexibility. Not only
+does it let you encapsulate a family of algorithms into their own set of classes,
+but it also allows you to **_change behavior at runtime_**.
+
+**Strategy Pattern**: defines a family of algorithms, encapsulate each one, and
+makes them interchangeable. Strategy lets the algorithm vary independently from
+clients that use it.
+
+**How to use design pattern**: We use libraries, frameworks, APIs, we can just
+pick and choose components and plug them in. But they don't help us structure our
+own application in ways that are easier to understand, more maintainable and flexible.
+That's where design pattern comes in.
