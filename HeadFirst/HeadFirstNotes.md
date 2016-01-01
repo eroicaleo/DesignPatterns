@@ -1,6 +1,7 @@
 <!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Chapter 01 Welcome to design patterns: Strategy Pattern](#chapter-01-welcome-to-design-patterns-strategy-pattern)
+- [Chapter 02 Keeping your objects in the know: Observer Pattern.](#chapter-02-keeping-your-objects-in-the-know-observer-pattern)
 <!-- /TOC -->
 
 # Chapter 01 Welcome to design patterns: Strategy Pattern
@@ -138,3 +139,59 @@ clients that use it.
 pick and choose components and plug them in. But they don't help us structure our
 own application in ways that are easier to understand, more maintainable and flexible.
 That's where design pattern comes in.
+
+# Chapter 02 Keeping your objects in the know: Observer Pattern.
+
+Observer Pattern keeps your objects in the know when something they might care
+about happens. Objects can even decide at runtime whether they want to be kept
+informed. It's one of the most heavily used pattern in JDK.
+
+**Weather Monitoring Application**
+
+Three players in this application:
+
+* Weather Station: physical devices acquire actual weather data
+* `WeatherData` object: tracks data coming in from weather station and updates
+  display.
+* display: show users current weather conditions.
+
+Our job is to implement `measurementsChanged()` so that it updates the three
+displays for current conditions, weather stats, and forecast.
+
+The system have to be expandable: other developers can create new custom display
+elements and users can add or remove as many display elements as they want to the
+application.
+
+Our first implementation below has the following problem:
+
+* coding to concrete implementation, not interfaces.
+* For every new display element we need to alter the code.
+* We have no way to add or remove display elements at runtime.
+* The display elements don't implement a common interface.
+* We haven't encapsulated the part that changes.
+* We are violating encapsulation of `WeatherData` class.
+
+```java
+public class WeatherData {
+
+    private CurrentConditionsDisplay currentConditionsDisplay = new CurrentConditionsDisplay();
+    private StatisticsDisplay statisticsDisplay = new StatisticsDisplay();
+    private ForecastDisplay forecastDisplay = new ForecastDisplay();
+
+    public void measurementsChanged() {
+        double temp = getTemperature();
+        double humidity = getHumidity();
+        double pressure = getPressure();
+
+        currentConditionsDisplay.update(temp, humidity, pressure);
+        statisticsDisplay.update(temp, humidity, pressure);
+        forecastDisplay.update(temp, humidity, pressure);
+    }
+
+}
+```
+
+**Observer Pattern**
+
+Observer pattern is pretty much like the newspaper subscription. We call the
+newspaper publisher `Subject`, and subscriber `Observer`.
