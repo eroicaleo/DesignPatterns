@@ -195,3 +195,11 @@ public class WeatherData {
 
 Observer pattern is pretty much like the newspaper subscription. We call the
 newspaper publisher `Subject`, and subscriber `Observer`.
+
+**_Observer Pattern_** *defines a one-to-many dependency so that when one object
+changes state, all of its dependents are notified and updated automatically*.
+
+Observer Pattern Class Diagram:
+![Observer Pattern Class Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ObserverPatternClassDiagram.png)
+
+**The Power of Loose Coupling**
