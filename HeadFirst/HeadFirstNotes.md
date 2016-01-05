@@ -227,3 +227,20 @@ WeatherData Observer Pattern Diagram:
 ![WeatherData Observer Pattern Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/WeatherStationDiagram.png)
 
 **Java built-in observer pattern**
+
+![Java built-in observer pattern](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ObserverPatternJavaBuiltin.png)
+
+Note that there are some difference between Java built-in Observer Pattern and
+our implementation:
+
+* We need to first call `setChanged()` before we call `notifyObservers()`.
+    * Give us the flexibility to optimize notification. Sometimes we might not
+      want to send notification too often, e.g. weather sensor is too sensitive.
+      The dual function is called `clearChanged()`.
+* There are two versions of `notifyObservers`:
+    * `notifyObservers()`
+    * `notifyObservers(Object arg)`
+    * The one without arguments let the observers `pull` data from `Observable`. While
+      the one with arguments `push` data to observers.
+* The `update` method in the `Observer` interface has the following signature.
+    * `update(Observable o, Object arg)`
