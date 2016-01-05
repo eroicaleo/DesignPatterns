@@ -222,3 +222,8 @@ subjects and observers are loosely coupled. Because:
 **Design Principles** *: Strive for loosely coupled designs between objects and interact*.
 Loosely coupled designs allow us to build flexible OO systems that can handle change
 because they minimize the interdependency between objects.
+
+WeatherData Observer Pattern Diagram:
+![WeatherData Observer Pattern Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/WeatherStationDiagram.png)
+
+**Java built-in observer pattern**

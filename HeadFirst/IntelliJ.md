@@ -22,4 +22,4 @@
   type of the whole expression.
 * `Shift+left-click` or `mid-click`: close tabs in the editor and the tool
   windows of IntelliJ.
-* `Alt+Insert`: generate getter and setter methods for any fields of your class.
+* `Alt+Insert`: generate getter and setter methods for any fields of your class. 
