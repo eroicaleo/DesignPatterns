@@ -20,3 +20,6 @@
 * `Ctrl+Shift+Space`: SmartType code completion, helps to find methods and
   variables that are suitable in the current context, by analyzing the expected
   type of the whole expression.
+* `Shift+left-click` or `mid-click`: close tabs in the editor and the tool
+  windows of IntelliJ.
+* `Alt+Insert`: generate getter and setter methods for any fields of your class.

@@ -203,3 +203,22 @@ Observer Pattern Class Diagram:
 ![Observer Pattern Class Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ObserverPatternClassDiagram.png)
 
 **The Power of Loose Coupling**
+
+When two objects are loosely coupled, they can interact, but have very little
+knowledge about each other. The Observer Pattern provides an object design where
+subjects and observers are loosely coupled. Because:
+
+* The only thing the subject knows about an observer is that it implements a
+  certain interface. It doesn't need to know anything else about observers.
+* We can add new observers at any time.
+* We never need to modify subject to add new types of observers. All we have to
+  do is to implement the Observer interface in the new observers and register as
+  an observer.
+* We can reuse subjects or observers independently of each other.
+* Changes to either subject or an observer will not affect others. As long as the
+  the objects still meet their obligations and implement their subject or observer
+  interfaces.
+
+**Design Principles** *: Strive for loosely coupled designs between objects and interact*.
+Loosely coupled designs allow us to build flexible OO systems that can handle change
+because they minimize the interdependency between objects.
