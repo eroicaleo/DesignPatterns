@@ -244,3 +244,31 @@ our implementation:
       the one with arguments `push` data to observers.
 * The `update` method in the `Observer` interface has the following signature.
     * `update(Observable o, Object arg)`
+* Our program cannot depend on the order of the `observers`.
+
+**The dark side of `java.util.Observable`**
+
+* `Observable` is a class, which means:
+    * We have to *subclass* it, we can't add on the `Observable` behavior to an
+      existing class that already extends another superclass.
+    * We cannot create our own implementation, and cannot swap the `java.util`
+      implementation for another (say, a multi-threaded implementation).
+    * Question??? We can still override the method.
+    * Violates our "program to interfaces not implementation".
+* `Observable` protects crucial methods `setChanged`, which means:
+    * We cannot create an instance of the `Observable` class and compose it with
+      your own objects, we have to *subclass*.
+    * Violates our "favor composition over inheritance".
+
+**How Observer Pattern make use of principles**
+
+* Identify the aspects of your application that vary and separate them from what
+  stays the same
+    * The thing changes in Observer Pattern is the state of subject and the type
+      and number of observers. We can vary the observers.
+* program to interfaces not implementation
+    * Both subject and observers use interfaces. Subject keeps tracking objects
+      implementing observer interface and observer register and get notified by
+      subject interface.
+* favor composition over inheritance
+    * It composes any number of Observers with their subject.

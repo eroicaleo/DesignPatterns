@@ -12,13 +12,11 @@
 * `Alt+Period`, `Ctrl+Alt+G`: go to declaration.
 
 ## Compile and Debug
-
 * `Ctrl+F9`: Make the project.
 * `Shift+F9`: Debug the code.
 * `Shift+10`: run the code.
 
 ## Code Completion
-
 * `Alt+Slash`: auto completion.
 * `Shift+F6`: Rename classes, methods and variables across the whole project.
 * `Ctrl+Shift+Space`: SmartType code completion, helps to find methods and
