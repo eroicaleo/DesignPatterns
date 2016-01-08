@@ -2,6 +2,7 @@
 
 - [Chapter 01 Welcome to design patterns: Strategy Pattern](#chapter-01-welcome-to-design-patterns-strategy-pattern)
 - [Chapter 02 Keeping your objects in the know: Observer Pattern.](#chapter-02-keeping-your-objects-in-the-know-observer-pattern)
+- [Chapter 03 Decorating Objects: Decorator Pattern](#chapter-03-decorating-objects-decorator-pattern)
 <!-- /TOC -->
 
 # Chapter 01 Welcome to design patterns: Strategy Pattern
@@ -272,3 +273,64 @@ our implementation:
       subject interface.
 * favor composition over inheritance
     * It composes any number of Observers with their subject.
+
+# Chapter 03 Decorating Objects: Decorator Pattern
+
+Once we know the techniques of decorating, we will be able to give our or someone
+else's objects new responsibility without making any code changes to the underlying
+class.
+
+In the StarBuzz example, we do `cost` like the following, we will have some
+problems:
+* If the condiments price changes, we need to modify `Beverage` class.
+* If we need to add new condiments, we have to modify `cost` method.
+* If we have new beverage like `Tea`, it should not have `hasWhip()` method. It
+  would be weird, it's not a green tea frapuccino.
+* What if a customer wants double `Mocha`?
+
+```java
+public double cost(){
+    double c = 0.0;
+    if (hasMilk()) {
+        c += milkCost;
+    }
+    if (hasSoy()) {
+        c += soyCost;
+    }
+    if (hasMocha()) {
+        c += mochaCost;
+    }
+    if (hasWhip()) {
+        c += whipCost;
+    }
+    return c;
+}
+```
+
+**Design Principle**: *Classes should be open for extension, but closed for
+modification*.
+
+"Code should be closed (to change) like lotus flower in the evening, yet open (
+to extension) like the lotus flower in the morning".
+
+While it seems like a contradiction, there are techniques for allowing code to be
+extended without modification. Be careful when choosing these areas of code that
+need to extended. Applying Open-Close Principle EVERYWHERE is wasteful, unnecessary,
+and can lead to complex, hard to understand code.
+
+**Decorator Pattern**: *attaches additional responsibility to an object dynamically
+. Decorators provide a flexible alternative to subclassing for extending functionality.*
+
+Here are the class diagram for decorator pattern and how it gets applied on the
+beverage problem:
+
+![Decorator Pattern Class Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/DecoratorPatternClassDiagram.png)
+
+![Decorator Pattern Beverage](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/DecoratorPatternBeverage.png)
+
+Note that although `CondimentDecorator` inherit the `Beverage` class, we are using
+inheritance to achieve *type matching* not to get *behavior*. We are using composition one
+level after another, so we need to type matching. The new behavior comes in through
+the composition of decorators with the base components as well as other decorators.
+Because we use composition, we get a whole lot more flexibility about mix and match
+condiments and beverages.
