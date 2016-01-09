@@ -334,3 +334,13 @@ level after another, so we need to type matching. The new behavior comes in thro
 the composition of decorators with the base components as well as other decorators.
 Because we use composition, we get a whole lot more flexibility about mix and match
 condiments and beverages.
+
+**`java.io` is a real world decorator**
+
+Here is part of the class diagram for `java.io` library.
+
+![Java IO Class Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/JavaIOClassDiagram.png)
+
+The diagram shows the downside of decorator pattern: results in too many small
+classes that can be overwhelming to developers trying to use the Decorator-based
+API.

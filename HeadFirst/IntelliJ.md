@@ -28,6 +28,13 @@
   or of the abstract base class.
 * `Alt+Insert`: generate getter and setter methods for any fields of your class.
 * `Ctrl+Alt+T`: Surround code by `try/catch`, `if/else`, and `for/while` etc.
+* `Ctrl+Alt+V`: Extract variable refactoring. Here is an example:
+  ```java
+  myEditorPane.setBorder(BoarderFactory.createEmptyBorder(5,5,5,5));
+  // Hightlight the code inside braket and Refractor to
+  Border emptyBorder = BoarderFactory.createEmptyBorder(5,5,5,5);
+  myEditorPane.setBorder(emptyBorder);
+  ```
 
 ## Navigation
 
@@ -49,3 +56,5 @@
 
 ## Edit
 * `Ctrl+Alt+W`: extend selection, from word to line to paragraph.
+* `Ctrl+Alt+/`: `/* */` comment code
+* `Alt+;`: `//` comment code
