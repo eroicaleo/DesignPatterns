@@ -11,6 +11,7 @@
 * `Ctrl+Q`: quick documentation.
 * `Ctrl+Shift+I`: quick definition.
 * `Alt+Period`, `Ctrl+Alt+G`: go to declaration.
+* `Shift+F1`: Open definition in browser.
 
 ## Compile and Debug
 * `Ctrl+F9`: Make the project.

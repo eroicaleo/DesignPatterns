@@ -3,6 +3,7 @@
 - [Chapter 01 Welcome to design patterns: Strategy Pattern](#chapter-01-welcome-to-design-patterns-strategy-pattern)
 - [Chapter 02 Keeping your objects in the know: Observer Pattern.](#chapter-02-keeping-your-objects-in-the-know-observer-pattern)
 - [Chapter 03 Decorating Objects: Decorator Pattern](#chapter-03-decorating-objects-decorator-pattern)
+- [Chapter 04 Baking with OO Goodness: Factory Pattern](#chapter-04-baking-with-oo-goodness-factory-pattern)
 <!-- /TOC -->
 
 # Chapter 01 Welcome to design patterns: Strategy Pattern
@@ -344,3 +345,27 @@ Here is part of the class diagram for `java.io` library.
 The diagram shows the downside of decorator pattern: results in too many small
 classes that can be overwhelming to developers trying to use the Decorator-based
 API.
+
+Another dark side about Decorator Pattern is that if the client code is dependent
+on specific types and when you start introducing decorators, bad things can happen.
+
+# Chapter 04 Baking with OO Goodness: Factory Pattern
+
+Get ready to know some loosely coupled design. **When you see "new", think "concrete"**.
+When you use new, you are instantiating a concrete class, so that's definitely an
+implementation not an interface. When we have the following code, we know when it
+comes time for changes or extensions, we'll have to reopen the code and examines
+what needs to be added. They also appear in several parts of our code, and make
+our code error-prone and difficult to maintain.
+
+```java
+Duck duck;
+
+if (picnic) {
+  duck = new MallardDuck();
+} else if (hunting) {
+  duck = new DecoyDuck();
+} else if (inBathTub) {
+  duck = new RubberDuck();
+}
+```
