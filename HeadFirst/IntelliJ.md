@@ -24,7 +24,8 @@
 * `Ctrl+Shift+Space`: SmartType code completion, helps to find methods and
   variables that are suitable in the current context, by analyzing the expected
   type of the whole expression.
-  It can work with `new`. You just need to type `new` and type this.
+    * It can work with `new`. You just need to type `new` and type this.
+    * In can work with type cast. You just need to type `()` and type this.
 * `Ctrl+I`: Implement methods of the interface that the current class implements
   or of the abstract base class.
 * `Alt+Insert`: generate getter and setter methods for any fields of your class.
@@ -36,6 +37,7 @@
   Border emptyBorder = BoarderFactory.createEmptyBorder(5,5,5,5);
   myEditorPane.setBorder(emptyBorder);
   ```
+* Live Templates: File | Setting | Live Templates `Ctrl+Alt+S`.
 
 ## Navigation
 

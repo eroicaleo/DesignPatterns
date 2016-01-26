@@ -369,3 +369,20 @@ if (picnic) {
   duck = new RubberDuck();
 }
 ```
+
+When we have code that makes use of lots of concrete classes, that code may have
+to be changed as new concrete classes are added. Our code won't be "closed to
+modification". The principle we are going to use is _"identify the aspects of your application
+that vary and separate them from what stays the same."_
+
+We got a name for the new object: we call it "Factory", which handles the details
+of object creation.
+
+Although it seems like pushing problem to another object, but remember, we can
+have multiple client, e.g. `PizzaShopMenu`, `HomeDelivery` as well as our current
+`PizzaShop`. By encapsulating the pizza creation in one classes, we now only have
+one place to make modification when implementation changes.
+
+**Simple Factory Defined**
+
+![Simple Factory](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ch04/SimpleFactoryClassDiagram.png)
