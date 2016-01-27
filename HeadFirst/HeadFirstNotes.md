@@ -341,7 +341,7 @@ condiments and beverages.
 
 Here is part of the class diagram for `java.io` library.
 
-![Java IO Class Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/JavaIOClassDiagram.png)
+![Java IO Class Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ch03/JavaIOClassDiagram.png)
 
 The diagram shows the downside of decorator pattern: results in too many small
 classes that can be overwhelming to developers trying to use the Decorator-based
