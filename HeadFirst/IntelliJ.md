@@ -20,6 +20,7 @@
 
 ## Code Completion
 * `Alt+Slash`: auto completion.
+  * Can suggest variable names, File | Setting | Code Style
 * `Shift+F6`: Rename classes, methods and variables across the whole project.
 * `Ctrl+Shift+Space`: SmartType code completion, helps to find methods and
   variables that are suitable in the current context, by analyzing the expected

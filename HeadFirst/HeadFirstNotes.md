@@ -4,6 +4,7 @@
 - [Chapter 02 Keeping your objects in the know: Observer Pattern.](#chapter-02-keeping-your-objects-in-the-know-observer-pattern)
 - [Chapter 03 Decorating Objects: Decorator Pattern](#chapter-03-decorating-objects-decorator-pattern)
 - [Chapter 04 Baking with OO Goodness: Factory Pattern](#chapter-04-baking-with-oo-goodness-factory-pattern)
+	- [Franchising Pizza Store with Factory Pattern](#franchising-pizza-store-with-factory-pattern)
 <!-- /TOC -->
 
 # Chapter 01 Welcome to design patterns: Strategy Pattern
@@ -386,3 +387,40 @@ one place to make modification when implementation changes.
 **Simple Factory Defined**
 
 ![Simple Factory](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ch04/SimpleFactoryClassDiagram.png)
+
+## Franchising Pizza Store with Factory Pattern
+We want to make more franchise in New York, Chicago and California. Each region
+has different styles. But if we just use `SimpleFactory`, and compose one instance
+of simple factory to a PizzaStore, we might not have enough quality control. For
+example, what if we mistakenly assign an `NYPizzaFactory` to an Chicago store?
+
+What we really want is to create a framework and ties the store and pizza together,
+yet still allows things to remain flexible. Before, we tie the Pizza making code
+to `PizzaStore`, and it's not flexible.
+
+The solution is to move `createPizza` method back to `PizzaStore` and make it
+`abstract`. See the code and diagram below. We will have a number of concrete
+subclass of `PizzaStore`, each with it's own pizza variation, all fitting within
+`PizzaStore` framework and still making use of the well-tuned `orderPizza()`
+method. An abstract method handles object creation and encapsulates it in a
+subclass. This decouples the client code in the super class from the object
+creation code in the subclass.
+
+```java
+public abstract class PizzaStore {
+    public Pizza orderPizza(String type) {
+
+        Pizza pizza = createPizza(type);
+
+        pizza.prepare();
+        pizza.bake();
+        pizza.cut();
+        pizza.box();
+
+        return pizza;
+    }
+    abstract Pizza createPizza(String type);
+}
+```
+
+![Pizza Store Factory Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ch04/PizzaStoreFactoryDiagram.png)
