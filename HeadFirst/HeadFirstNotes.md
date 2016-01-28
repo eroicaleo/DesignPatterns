@@ -424,3 +424,13 @@ public abstract class PizzaStore {
 ```
 
 ![Pizza Store Factory Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ch04/PizzaStoreFactoryDiagram.png)
+
+**Factory Method Pattern**
+
+It encapsulates object creation by letting subclasses decide what objects to create.
+
+![Factory Method Pattern Diagram](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ch04/FactoryMethodPatternDiagram.png)
+
+Another view of this pattern is it encapsulates product knowledge into each creator.
+
+![Parallel Class Hierarchy](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ch04/ParallelClassHierarchy.png)

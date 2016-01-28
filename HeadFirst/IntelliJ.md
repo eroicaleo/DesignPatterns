@@ -39,6 +39,8 @@
   myEditorPane.setBorder(emptyBorder);
   ```
 * Live Templates: File | Setting | Live Templates `Ctrl+Alt+S`.
+* `Alt+Shift+P`: If the cursor is between the parentheses of a method call,
+  brings up a list of valid parameters.
 
 ## Navigation
 
