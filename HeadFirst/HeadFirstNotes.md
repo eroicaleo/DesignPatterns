@@ -434,3 +434,55 @@ It encapsulates object creation by letting subclasses decide what objects to cre
 Another view of this pattern is it encapsulates product knowledge into each creator.
 
 ![Parallel Class Hierarchy](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ch04/ParallelClassHierarchy.png)
+
+## Factory Method Pattern Defined
+
+**_Factory Method Pattern_** *defines an interface for creating an object but let
+subclass decide which class to instantiate. Factory Method lets a class defer
+instantiation to subclass*.
+
+Abstract Creator gives you an interface with a method for creating objects, also
+know as the "factor method". Any other method implemented in the abstract Creator
+are written to operate on product produced by the factory method. Only subclass
+implement the factory method and create products. The creator class is written
+without knowledge of the actual products that will be created, which is decided
+purely by the choice of subclass that is used.
+
+![Factory Method Pattern Diagram Generic](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ch04/FactoryMethodPatternDiagramGeneric.png)
+
+The difference between `SimpleFactory` and `FactoryMethod`:
+* `FactoryMethod`: by subclassing abstract creator, e.g. `PizzaStore`, you decide
+  what concrete products go into making the pizza that `orderPizza()` returns.
+* `SimpleFactory`: gives a way to encapsulate object creation, but doesn't give
+  you a way to the flexibility, because there is no way to vary the products you
+	are creating.
+
+## The Dependent Inversion Principle
+
+If we implement the following way, this version of `PizzaStore` depends on all
+those `pizza` objects, because it's creating them directly. Any changes in one
+concrete `pizza` class, we may need to modify the `PizzaStore`. We call the
+`PizzaStore` "depends on" the `pizza` implementation.
+
+```java
+if (style == "NY") {
+		if (type.equals("cheese")) {
+		} else if (type.equals("pepperoni")) {
+		}
+} else if (style == "Chicago") {
+		if (type.equals("cheese")) {
+		} else if (type.equals("pepperoni")) {
+		}
+}
+```
+
+**_Design Principle: Dependent Inversion Principle_**: *Depend upon abstractions.
+Do not depend upon concrete classes.*
+
+It suggests high-level objects should not depend on our low-level components.
+They should both depend on abstractions. `PizzaStore` is high-level components.
+The implementation of `Pizza` is low-level components. We should write our code
+so that we are depending on abstractions not concrete classes.
+
+After applying `FactoryMethod`, high-level components `PizzaStore` and low-level
+components all those pizzas, both depend on `Pizza` the abstraction.
