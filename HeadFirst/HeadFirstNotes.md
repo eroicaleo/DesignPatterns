@@ -486,3 +486,97 @@ so that we are depending on abstractions not concrete classes.
 
 After applying `FactoryMethod`, high-level components `PizzaStore` and low-level
 components all those pizzas, both depend on `Pizza` the abstraction.
+
+Some guidelines to avoid violation of the dependent inversion principle:
+* No variable should should a reference to a concrete class.
+		* if you use `new`, you'll be holding a reference to a concrete class. Use a
+			factory to get around it.
+* No class should derive from a concrete class.
+		* you are depending on a concrete class. Derive from an abstract class or an
+			interface.
+* No method should override an implementation method of any of its base class.
+
+These are just guidelines not rules to follow.
+
+## Adding Ingredients
+
+* All Objectville Pizza have same components, but each region has different
+implementation of those components.
+* Each family consists of a type of dough, a type of sauce, a type of cheese
+and a seafood toppings.
+
+Again we can use Factory to create ingredients.
+
+1. Define an interface for the factory to create our ingredients.
+	```java
+	public interface PizzaIngredientFactory {
+    public Dough createDough();
+    public Sauce createSauce();
+    public Cheese createCheese();
+    public Veggies[] createVeggies();
+    public Pepperoni createPepperoni();
+    public Clams createClams();
+	}
+	```
+2. Build a factory for each region.
+	```java
+	public class NYPizzaIngredientFactory implements PizzaIngredientFactory {
+    @Override
+    public Dough createDough() {
+        return new ThinCrustDough();
+    }
+
+    @Override
+    public Sauce createSauce() {
+        return new MarinaraSauce();
+    }
+		// omit the following similar code
+	}
+	```
+3. implement a set of ingredient class like `ReggianoCheese`.
+	```java
+	public class ReggianoCheese extends Cheese {
+  }
+	```
+4. Reworking the `Pizza` class. Make the `prepare()` method abstract.
+	```java
+	public abstract class Pizza {
+
+    String name;
+    Dough dough;
+    Sauce sauce;
+    Cheese cheese;
+    Veggies veggies[];
+    Pepperoni pepperoni;
+    Clams clam;
+
+    public Pizza() {
+    }
+
+    public abstract void prepare();
+    // omit other bake, cut, box which is the same as before.
+  }
+	```
+5. Reworking the concrete `Pizza` type. Now we need composition an instance of
+	`PizzaIngredientFactory` in the `CheesePizza` class. The ingredients produced
+	depends on the factory. The `Pizza` class does not care how to make pizza. It's
+	decoupled from regional difference and can be easily reused when there are more
+	other factories.
+	```java
+	public class CheesePizza extends Pizza {
+    PizzaIngredientFactory ingredientFactory;
+
+    public CheesePizza(PizzaIngredientFactory ingredientFactory) {
+        this.ingredientFactory = ingredientFactory;
+    }
+
+    @Override
+    public void prepare() {
+        System.out.println("Preparing " + name);
+        dough = ingredientFactory.createDough();
+        sauce = ingredientFactory.createSauce();
+        cheese = ingredientFactory.createCheese();
+
+    }
+	}
+	```

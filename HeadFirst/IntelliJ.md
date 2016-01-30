@@ -41,6 +41,7 @@
 * Live Templates: File | Setting | Live Templates `Ctrl+Alt+S`.
 * `Alt+Shift+P`: If the cursor is between the parentheses of a method call,
   brings up a list of valid parameters.
+* `Alt+Enter`: automatically fix the errors or bugs.
 
 ## Navigation
 
@@ -48,13 +49,15 @@
 * `Ctrl+F12`: Navigate|File Structure, navigate in the currently edited file.
 * `Alt+F1`: To quickly select the currently edited element (class, file, method
   or field) in any view.
+* `Ctrl+Shift+Backspace`: brings you back to last edited position.
+  Navigation | Last Edit Location
 
 ## View and Windows
 
 * `Alt+0`: show messages.
 * `Alt+1`: project tree.
 * `Alt+7`：file Structure, like `Ctrl+F12`, but in the left pane.
-* `Shift+left-click` or `mid-click`: close tabs in the editor and the tool
+* `Shift+left-click` or `mid-click` or `Ctrl+F4`: close tabs in the editor and the tool
   windows of IntelliJ.
 * `Escape, Escape`: focus on editor.
 * `Shift+Escapse`：focus on editor and close current tool window.
@@ -64,3 +67,4 @@
 * `Ctrl+Alt+W`: extend selection, from word to line to paragraph.
 * `Ctrl+Alt+/`: `/* */` comment code
 * `Alt+;`: `//` comment code
+* `Alt+Home, Alt+Insert`: create new Java classes.
