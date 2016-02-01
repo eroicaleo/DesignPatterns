@@ -34,7 +34,7 @@
 * `Ctrl+Alt+V`: Extract variable refactoring. Here is an example:
   ```java
   myEditorPane.setBorder(BoarderFactory.createEmptyBorder(5,5,5,5));
-  // Hightlight the code inside braket and Refractor to
+  // Highlight the code inside braket and Refractor to
   Border emptyBorder = BoarderFactory.createEmptyBorder(5,5,5,5);
   myEditorPane.setBorder(emptyBorder);
   ```
@@ -68,3 +68,6 @@
 * `Ctrl+Alt+/`: `/* */` comment code
 * `Alt+;`: `//` comment code
 * `Alt+Home, Alt+Insert`: create new Java classes.
+* `Ctrl+Shift+F7`: quickly highlight the usage of some variables in the current
+  file, `F3` and `Shift+F3` to navigate the highlighted usages. `Escape, Escape`
+  to remove highlighting.

@@ -5,6 +5,9 @@
 - [Chapter 03 Decorating Objects: Decorator Pattern](#chapter-03-decorating-objects-decorator-pattern)
 - [Chapter 04 Baking with OO Goodness: Factory Pattern](#chapter-04-baking-with-oo-goodness-factory-pattern)
 	- [Franchising Pizza Store with Factory Pattern](#franchising-pizza-store-with-factory-pattern)
+	- [Factory Method Pattern Defined](#factory-method-pattern-defined)
+	- [The Dependent Inversion Principle](#the-dependent-inversion-principle)
+	- [Abstract Factory: Adding Ingredients](#abstract-factory-adding-ingredients)
 <!-- /TOC -->
 
 # Chapter 01 Welcome to design patterns: Strategy Pattern
@@ -389,6 +392,7 @@ one place to make modification when implementation changes.
 ![Simple Factory](https://github.com/eroicaleo/DesignPatterns/blob/master/HeadFirst/ch04/SimpleFactoryClassDiagram.png)
 
 ## Franchising Pizza Store with Factory Pattern
+
 We want to make more franchise in New York, Chicago and California. Each region
 has different styles. But if we just use `SimpleFactory`, and compose one instance
 of simple factory to a PizzaStore, we might not have enough quality control. For
@@ -498,7 +502,7 @@ Some guidelines to avoid violation of the dependent inversion principle:
 
 These are just guidelines not rules to follow.
 
-## Adding Ingredients
+## Abstract Factory: Adding Ingredients
 
 * All Objectville Pizza have same components, but each region has different
 implementation of those components.
@@ -580,3 +584,39 @@ Again we can use Factory to create ingredients.
     }
 	}
 	```
+6. Reworking the concrete `PizzaStore` type. The `NYPizzaStore` is composed with
+	a `NYPizzaIngredientFactory`. Then we pass each pizza the factory that should
+	be used to produce its ingredients.
+	```java
+	public class NYPizzaStore extends PizzaStore {
+    @Override
+    Pizza createPizza(String type) {
+        Pizza pizza = null;
+        PizzaIngredientFactory ingredientFactory = new NYPizzaIngredientFactory();
+
+        if (type.equals("cheese")) {
+            pizza = new CheesePizza(ingredientFactory);
+            pizza.setName("New York Style Cheese Pizza");
+        } else if (type.equals("veggie")) {
+            pizza = new VeggiePizza(ingredientFactory);
+            pizza.setName("New York Style Veggie Pizza");
+        } else if (type.equals("clam")) {
+            pizza = new ClamPizza(ingredientFactory);
+            pizza.setName("New York Style Clam Pizza");
+        } else if (type.equals("pepperoni")) {
+            pizza = new PepperoniPizza(ingredientFactory);
+            pizza.setName("New York Style Pepperoni Pizza");
+        }
+
+        return pizza;
+    }
+	}
+	```
+
+So we create a family of ingredients for pizzas by introducing a new type of factory
+called an Abstract Factory. In our case, a family means: dough, sauce, meats and
+veggies. An Abstract Factory gives us an interface for creating a family of
+products. By using this interface, we decoupled our code from the actual factory
+that creates the products. That allows us to implement a variety of factories
+that produce products meant for different context - such as different region,
+operating systems, or different look or feel.
