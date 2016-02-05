@@ -620,3 +620,23 @@ products. By using this interface, we decoupled our code from the actual factory
 that creates the products. That allows us to implement a variety of factories
 that produce products meant for different context - such as different region,
 operating systems, or different look or feel.
+
+## Abstract Factory Pattern Defined
+
+**Abstract Factory Pattern Defined**: provides an interface to create families of
+related or dependent objects without specifying their concrete classes.
+
+The similarity and difference between Factory Method and Abstract Factory:
+* Both patterns create objects.
+		* FM uses inheritance. subclass to do the creation, client only needs to know
+			the abstract type they are using.
+		* AF uses object composition. subclass defines how products are produced.
+* Both decouple the client from concrete classes.
+* To add one new product, the AF needs to add interface.
+* AF use FM to create objects.
+* FM makes use of the concrete types the subclasses create.
+* Both encapsulate object creation and keep application loosely coupled.
+* Use when:
+		* AF: needs to create family of products.
+		* FM: decouple client code from concrete classes need to instantiate.
+			Or don't know all the concrete classes you are going to need.

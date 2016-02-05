@@ -12,6 +12,8 @@
 * `Ctrl+Shift+I`: quick definition.
 * `Alt+Period`, `Ctrl+Alt+G`: go to declaration.
 * `Shift+F1`: Open definition in browser.
+* `Alt+Q`: Context info, see the declaration of the current method without the
+  need to scroll to it.
 
 ## Compile and Debug
 * `Ctrl+F9`: Make the project.
