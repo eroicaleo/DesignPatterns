@@ -5,6 +5,9 @@
 * `Double Shift`: Search anywhere.
 * `Alt+F7`: find all usage of a class, method and variable in the project.
 * just type: speed search in the any tree view.
+* `Ctrl+Alt+F7`: bring forward the list of all usages of a class, method or
+  variable across the whole project, and quickly jump to the selected usage.
+* `Ctrl+Shift+A`: Find Action.
 
 ## Definition, Declaration and Documentation
 * `Alt+Shift+G`：open any classes. Can be used in code completion pop-up list.
@@ -13,6 +16,8 @@
       I want to search `MergeSort`, I just need to type `MeSo`.
 * `Ctrl+Q`: quick documentation.
 * `Ctrl+Shift+I`: quick definition for a variable/method/variable.
+    * Can also be used in code completion drop down list.
+    * Can also preview a picture.
 * `Alt+Period`, `Ctrl+Alt+G`: go to declaration. Can be used in code completion pop-up list.
 * `Shift+F1`: Open definition in browser.
 * `Alt+Q`: Context info, see the declaration of the current method without the
@@ -27,10 +32,12 @@
 * `Alt+F8` in debug mode: evaluate the value of highlighted expression.
 * hold `Alt` in debug mode: To quickly evaluate the value of any expression.
 * `Ctrl+F8`: Toggle breakpoints.
+* `Alt+Shift+F10`: access Run/Debug drop down.
 
 ## Code Completion
 * `Alt+Slash`: auto completion.
   * Can suggest variable names, File | Setting | Code Style
+  * Can be used in search text in current file
 * `Shift+F6`: Rename classes, methods and variables across the whole project.
 * `Ctrl+Shift+Space`: SmartType code completion, helps to find methods and
   variables that are suitable in the current context, by analyzing the expected
@@ -94,10 +101,15 @@
 * `Ctrl+Shift+F7`: quickly highlight the usage of some variables in the current
   file, `F3` and `Shift+F3` to navigate the highlighted usages. `Escape, Escape`
   to remove highlighting. This can highlight multiple variables.
+    * place the carat at the `implements` keyword in the class definition, and
+      press the combination, and select the desired interface from the list.
+    * To view all exit points of a method, place the caret at one of them, e.g.
+      the return statement and press the combination.
 * `F2`, `Shift+F2`: jump between highlighted syntax errors.
 * `Ctrl+Alt+Up`, `Ctrl+Alt+Down`: jump between compiler error or search operation
   results.
 * `Ctrl+Shift+J`: Join two lines.
+* `Ctrl+Shift+Down`, `Ctrl+Shift+Up`: move a block of codes up and down.
 
 ## Misc.
 * `Alt+Shift+C`: quickly review your recent changes to the project.
