@@ -340,6 +340,16 @@ the composition of decorators with the base components as well as other decorato
 Because we use composition, we get a whole lot more flexibility about mix and match
 condiments and beverages.
 
+The `getDescription` in `CondimentDecorator` needs to be `abstract`, because it
+wants all concrete decorators re-implement this method. Otherwise, the code won't compile.
+
+```java
+public abstract class CondimentDecorator extends Beverage {
+    @Override
+    public abstract String getDescription();
+}
+```
+
 **`java.io` is a real world decorator**
 
 Here is part of the class diagram for `java.io` library.
@@ -512,6 +522,7 @@ and a seafood toppings.
 Again we can use Factory to create ingredients.
 
 1. Define an interface for the factory to create our ingredients.
+
 	```java
 	public interface PizzaIngredientFactory {
     public Dough createDough();
@@ -522,7 +533,9 @@ Again we can use Factory to create ingredients.
     public Clams createClams();
 	}
 	```
+
 2. Build a factory for each region.
+
 	```java
 	public class NYPizzaIngredientFactory implements PizzaIngredientFactory {
     @Override
@@ -537,12 +550,16 @@ Again we can use Factory to create ingredients.
 		// omit the following similar code
 	}
 	```
+
 3. implement a set of ingredient class like `ReggianoCheese`.
+
 	```java
 	public class ReggianoCheese extends Cheese {
   }
 	```
+
 4. Reworking the `Pizza` class. Make the `prepare()` method abstract.
+
 	```java
 	public abstract class Pizza {
 
@@ -561,11 +578,13 @@ Again we can use Factory to create ingredients.
     // omit other bake, cut, box which is the same as before.
   }
 	```
+
 5. Reworking the concrete `Pizza` type. Now we need composition an instance of
 	`PizzaIngredientFactory` in the `CheesePizza` class. The ingredients produced
 	depends on the factory. The `Pizza` class does not care how to make pizza. It's
 	decoupled from regional difference and can be easily reused when there are more
 	other factories.
+
 	```java
 	public class CheesePizza extends Pizza {
     PizzaIngredientFactory ingredientFactory;
@@ -584,9 +603,11 @@ Again we can use Factory to create ingredients.
     }
 	}
 	```
+
 6. Reworking the concrete `PizzaStore` type. The `NYPizzaStore` is composed with
 	a `NYPizzaIngredientFactory`. Then we pass each pizza the factory that should
 	be used to produce its ingredients.
+
 	```java
 	public class NYPizzaStore extends PizzaStore {
     @Override
@@ -627,10 +648,10 @@ operating systems, or different look or feel.
 related or dependent objects without specifying their concrete classes.
 
 The similarity and difference between Factory Method and Abstract Factory:
+
 * Both patterns create objects.
-		* FM uses inheritance. subclass to do the creation, client only needs to know
-			the abstract type they are using.
-		* AF uses object composition. subclass defines how products are produced.
+* FM uses inheritance. subclass to do the creation, client only needs to know the abstract type they are using.
+* AF uses object composition. subclass defines how products are produced.
 * Both decouple the client from concrete classes.
 * To add one new product, the AF needs to add interface.
 * AF use FM to create objects.
@@ -640,3 +661,10 @@ The similarity and difference between Factory Method and Abstract Factory:
 		* AF: needs to create family of products.
 		* FM: decouple client code from concrete classes need to instantiate.
 			Or don't know all the concrete classes you are going to need.
+
+# Chapter 04 the Singleton Pattern
+
+* Q and A:
+		* Q: What is the use that an object can be instantiated once
+		* A: objects like thread pool, cache. Instantiate multiple times causes problems.
+		* Q: Can we use global variable/static variable (JAVA)
