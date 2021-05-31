@@ -9,7 +9,7 @@
 
 <img src="./images/ch01UML02.png" style="zoom:50%;" />
 
-# Pillars of OOP
+# Ch02 Pillars of OOP
 
 Four pillars:
 
@@ -109,7 +109,49 @@ foreach (Animal a : bag)
 
 You can also think of polymorphism as the ability of an object to “pretend” to be something else, usually a class it extends or an interface it implements. In our example, the dogs and cats in the bag were pretending to be generic animals.
 
-# Chapter 3 Relations Between Objects
+# Ch03 Relations Between Objects
 
 Pg 20
+
+如题，这章讲述class之间的其他关系。
+
+## Association
+
+***Association***: is a type of relationship in which one object uses or interacts with another.
+
+<img src="./images/ch03association.png" style="zoom:50%;" />
+
+The link between the 2 class is ***always*** there. It is similar to a field in a class, but doesn't always have to be. It can be a method that returns a object, e.g. an order have a method to return its customer.
+
+注意这里的重点是***link is always there***.
+
+## Dependency
+
+***Dependency***: a weaker variant of association that usually implies that there’s no permanent link between objects.
+
+Dependency typically (but not always) implies that an object accepts another object as a method parameter, instantiates, or uses another object.
+
+比association宽泛，比如在一个method里作为参数。或者在一个method里，instantiates另一个类。这里method结束了，另一个class object就没有了。
+
+Here’s how you can spot a dependency between classes: **a dependency exists between two classes if changes to the definition of one class result in modifications in another class.**
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch03dependency.png" style="zoom:50%;" />
+
+***Composition***: "whole-part" relationship between two objects, one of which is composed of one or more instances of the other.
+
+The distinction between this relation and others is that the component can only exist as a part of the container.
+
+如下图，没有学校就没有系。
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch03composition.png" style="zoom:50%;" />
+
+***Aggregation***: One object merely contains a reference to another. The container doesn’t control the life cycle of the component. The component can exist without the container and can be linked to several containers at the same time.
+
+没有了系，老师这个类还可以存在。可以换一个学校等等。
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch03aggregation.png" style="zoom:50%;" />
+
+
+
+[TOC]
 
