@@ -135,7 +135,7 @@ Dependency typically (but not always) implies that an object accepts another obj
 
 Here’s how you can spot a dependency between classes: **a dependency exists between two classes if changes to the definition of one class result in modifications in another class.**
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch03dependency.png" style="zoom:50%;" />
+<img src="./images/ch03dependency.png" style="zoom:50%;" />
 
 ## Composition
 
@@ -145,7 +145,7 @@ The distinction between this relation and others is that the component can only 
 
 如下图，没有学校就没有系。
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch03composition.png" style="zoom:50%;" />
+<img src="./images/ch03composition.png" style="zoom:50%;" />
 
 ## Aggregation
 
@@ -153,7 +153,7 @@ The distinction between this relation and others is that the component can only 
 
 没有了系，老师这个类还可以存在。可以换一个学校等等。
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch03aggregation.png" style="zoom:50%;" />
+<img src="./images/ch03aggregation.png" style="zoom:50%;" />
 
 # Ch04 What's a Design Pattern
 
