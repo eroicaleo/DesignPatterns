@@ -137,6 +137,8 @@ Here’s how you can spot a dependency between classes: **a dependency exists be
 
 <img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch03dependency.png" style="zoom:50%;" />
 
+## Composition
+
 ***Composition***: "whole-part" relationship between two objects, one of which is composed of one or more instances of the other.
 
 The distinction between this relation and others is that the component can only exist as a part of the container.
@@ -145,13 +147,65 @@ The distinction between this relation and others is that the component can only 
 
 <img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch03composition.png" style="zoom:50%;" />
 
+## Aggregation
+
 ***Aggregation***: One object merely contains a reference to another. The container doesn’t control the life cycle of the component. The component can exist without the container and can be linked to several containers at the same time.
 
 没有了系，老师这个类还可以存在。可以换一个学校等等。
 
 <img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch03aggregation.png" style="zoom:50%;" />
 
+# Ch04 What's a Design Pattern
 
+pg 25
+
+***Design patterns***: common solutions to typical problems. They are customizable blueprints to solve recurring design problems in your code.
+
+是一个像设计蓝图一样的东西。
+
+You cannot use it the way you use off-the-shelf functions and libraries. They are a general concept for solving a particular problem. 
+
+Pattern and Algorithm: both are typical solutions for some known problems.
+
+* Algorithm: low level, a clear set of actions that can achieve some goal.
+  * More like recipe, clear steps to achieve a goal.
+* Pattern: high level description of a solution.
+  * More like blueprint: what the result and its features are, but the exact order of information is up to you.
+
+## What does the pattern consist of?
+
+***Intent***: of the pattern briefly describes both the problem and the solution.
+
+***Motivation***: further explains the problem and the solution the pattern makes possible.
+
+***Structure*** of classes shows each part of the pattern and how they are related.
+
+***Code example*** in one of the popular programming languages makes it easier to grasp the idea behind the pattern.
+
+## Classification of patterns
+
+Design patterns differ by their complexity, level of detail and scale of applicability to the entire system being designed.
+
+Road construction analogy, to make a safe intersection:
+
+* simple traffic lights
+* multilevel Interchange, underground passages for pedestrians.
+
+Low level patterns are called ***idioms***. Only to a single PL. 我们常说的pythonic way。
+
+Most universal and high-level patterns are ***architectural patterns***.
+
+***Creational patterns***: provide object creation mechanisms that increase flexibility and reuse of existing code.
+
+***Structural patterns***: explain how to assemble objects and classes into larger structures, while keeping the structures flexible and efficient.
+
+***Behavioral patterns***: take care of effective communication and the assignment of responsibilities between objects.
+
+分别是object如何创建，如何放在一起，如果互动/各司其职。
+
+# Ch05 Why Should I Learn Patterns?
+
+pg 29
 
 [TOC]
 
