@@ -207,5 +207,13 @@ Most universal and high-level patterns are ***architectural patterns***.
 
 pg 29
 
+Design patterns are a toolkit of tried and tested solutions to common problems in software design. Even if you never encounter these problems, knowing patterns is still useful because it teaches you how to solve all sorts of problems using principles of object-oriented design.
+
+Design patterns define a common language that you and your teammates can use to communicate more efficiently.
+
+# Ch06 Features of Good Design
+
+
+
 [TOC]
 
