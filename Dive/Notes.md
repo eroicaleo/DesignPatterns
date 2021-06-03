@@ -213,6 +213,121 @@ Design patterns define a common language that you and your teammates can use to 
 
 # Ch06 Features of Good Design
 
+pg 31
+
+This chapter discusses things to aim for and things to avoid in designing SW architecture.
+
+## Code Reuse
+
+We always want to reduce cost and development time.
+
+Making existing code work in a new context usually takes extra effort.
+
+Things that reduce flexibility and make it harder to reuse:
+
+* Tight coupling between components
+* dependencies on concrete classes instead of interfaces
+* hardcoded operations
+
+Using design patterns is one way to increase flexibility and make is easier to reuse. But sometimes make the components more complicated.
+
+Erich Gamma's three levels of reuse:
+
+* lowest level: class libraries, containers.
+* highest level: Frameworks.
+  * They identify the key abstractions for solving a problem, represent them by classes and define relations between them.
+  * `JUnit` is a small framework, it only has `Test`, `TestCase` and `TestSuite` and relationships defined.
+  * You hook into frameworks by subclassing somewhere. They use so-called Hollywood principle of "don't call us, we will call you".
+  * The framework lets you define your custom behaviour and it will call you when it's your turn to do something.
+  * 想想Juit和Springboot都是这样的。
+* middle level: patterns.
+  * smaller and more abstract than frameworks.
+  * Describe how a couple of classes can relate to and interact with each other.
+  * Less risky than frameworks, which needs lots of investment.
+  * Let you reuse design ideas and concepts independently of concrete code.
+
+The code reuse increases when moving from classes to patterns to frameworks.
+
+## Extensibility
+
+***Change*** is the only constant thing in a programmer’s life. There are several reasons why this happens.
+
+* We understand better when we start to solve it.
+* Sth. beyond your control happened. E.g. browser drops support for Flash.
+* Customers need more features.
+
+That’s why all seasoned developers try to provide for possible future changes when designing an application’s architecture.
+
+# Ch07 Encapsulate What Varies
+
+pg 35
+
+***Identify the aspects of your application that vary and separate them from what stays the same.***
+
+开船的比喻。水里有鱼雷，把船仓分割成一个一个房间。撞上一个鱼雷，一个房间进水了，别的房间没事。所以船不会沉。
+
+Isolate the parts of the program that vary in independent modules, protecting the rest of the code
+from adverse effects.
+
+## Encapsulation on a method level
+
+E.g., e-commerce app, we have `getOrderTotal` which calculates the grand total of the order including the tax. 税的计算会根据税法，地域做调整。所以会经常发生改变。
+
+BEFORE: tax calculation code is mixed with the rest of the method’s code.
+
+```java
+1 method getOrderTotal(order) is
+2 	total = 0
+3 	foreach item in order.lineItems
+4 		total += item.price * item.quantity
+5
+6 	if (order.country == "US")
+7 		total += total * 0.07 // US sales tax
+8 	else if (order.country == "EU"):
+9 		total += total * 0.20 // European VAT
+10
+11  return total
+```
+
+AFTER: you can get the tax rate by calling a designated method.
+
+```java
+1 method getOrderTotal(order) is
+2 	total = 0
+3 	foreach item in order.lineItems
+4 		total += item.price * item.quantity
+5
+6 	total += total * getTaxRate(order.country)
+7
+8 	return total
+9
+10 method getTaxRate(country) is
+11 	if (country == "US")
+12 		return 0.07 // US sales tax
+13 	else if (country == "EU")
+14 		return 0.20 // European VAT
+15 	else
+16 		return 0
+```
+
+## Encapsulation on a class level
+
+Overtime you add more responsibilities to a method.
+
+They blur the primary responsibility of the containing class.
+
+BEFORE: calculating tax in Order class.
+
+<img src="./images/ch08order.png" style="zoom:50%;" />
+
+AFTER: tax calculation is hidden from the order class.
+
+<img src="./images/ch08taxcalc.png" style="zoom:50%;" />
+
+# Ch08 Program to an Interface, not an Implementation
+
+pg 40
+
 
 
 [TOC]
