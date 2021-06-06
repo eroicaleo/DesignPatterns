@@ -328,7 +328,92 @@ AFTER: tax calculation is hidden from the order class.
 
 pg 40
 
+***Program to an interface, not an implementation. Depend on abstractions, not on concrete classes.***
 
+You can tell that the design is flexible enough if you can easily extend it without breaking any existing code.
+
+A `Cat` that can eat any food is more flexible than one that can eat just sausages. You can still feed the first cat with sausages because they are a subset of “any food”; however, you can extend that cat’s menu with any other food.
+
+A flexible way to set up collaboration between objects:
+
+1. Determine what exactly one object needs from the other: which methods does it execute?
+2. Describe these methods in a new interface or abstract class.
+3. Make the class that is a dependency implement this interface.
+4. Now make the second class dependent on this interface rather than on the concrete class. You still can make it work with objects of the original class, but the connection is now much more flexible.
+
+<img src="./images/ch08cat.png" style="zoom:50%;" />
+
+Before and after extracting the interface. The code on the right is more flexible than the code on the left, but it’s also more complicated.
+
+## Another Example
+
+### Implementation 1
+
+BEFORE: all classes are tightly coupled. Note in the `createSw` function, all concrete classes are instantiated.
+
+<img src="./images/ch08company1bad.png" style="zoom:50%;" />
+
+### Implementation 2
+
+虽然每一个工种做的事情不一样，但是我们可以把generalize various work-related methods and then extract a common interface for all employee classes.
+
+<img src="./images/ch08companybetter.png" style="zoom:50%;" />
+
+Here, we use polymorphsm. Now the `Company` can treat different employee objects via `Employee` interface.
+
+BETTER: polymorphism helped us simplify the code, but the rest of the Company class still depends on the concrete employee classes.
+
+### Implementation 3
+
+上一个解法的问题，如果我们要有不同类型的公司，每个公司里有不同类型的员工。我们岂不是要定义不同的公司类？
+
+To solve this problem, we could declare the method for getting employees as abstract. Each concrete company will implement this method differently, creating only those employees that it needs.
+
+AFTER: the primary method of the Company class is independent from concrete employee classes. Employee objects are created in concrete company subclasses.
+
+Now you can extend this class and introduce new types of companies and employees while still reusing a portion of the base company class.
+
+![](./images/ch08companybest.png)
+
+# Ch09 Favor Composition Over Inheritance
+
+pg 45
+
+继承是最直接的code reuse的方法。两个类有相同的code，创建一个common base class, move the similar code into it。划算！
+
+但是如果程序变大，tons of classes会有以下问题。
+
+* ***A subclass can’t reduce the interface of the superclass.*** You have to implement all abstract methods of the parent class even if you won’t be using them. 这点在第二章讲到继承的时候也提到了。
+* ***When overriding methods you need to make sure that the new behavior is compatible with the base one.*** It’s important because objects of the subclass may be passed to any code that expects objects of the superclass and you don’t want that code to break. 程序如果打了，可能有无数的地方会用到base class。这很难保证overriding methods不break。
+* ***Inheritance breaks encapsulation of the superclass*** because the internal details of the parent class become available to the subclass. There might be an opposite situation where a programmer makes a superclass aware of some details of subclasses for the sake of making further extension easier. 如果有例子就好了。
+* ***Subclasses are tightly coupled to superclasses***. Any change in a superclass may break the functionality of subclasses.
+* ***Trying to reuse code through inheritance can lead to creating parallel inheritance hierarchies.*** Inheritance usually takes place in a single dimension. But whenever there are two or more dimensions, you have to create lots of class combinations, bloating the class hierarchy to a ridiculous size. 看这一章的例子。
+
+更好的做法是composition. Whereas inheritance represents the “is a” relationship between classes (a car is a transport), composition represents the “has a” relationship (a car has an engine). Composition的定义参考第三章。
+
+这条principle也适用于aggregation—a more relaxed variant of composition where one object may have a reference to the other one but doesn’t manage its lifecycle. Here’s an example: a car has a driver, but he or she may use another car or just walk without the car. Aggregation的定义也参考第三章。
+
+## Example
+
+***Inheritance implementation***: extending a class in several dimensions (cargo type × engine type × navigation type) may lead to a combinatorial explosion of subclasses.
+
+Each additional parameter results in multiplying the number of subclasses. There’s a lot of duplicate code between subclasses because a subclass can’t extend two classes at the same time.
+
+<img src="./images/ch09inheritance.png" style="zoom:50%;" />
+
+***Composition implementation***: delegate a behavior of a car to other objects. This way, you can replace a behavior at run-time. For instance, you can replace an engine object linked to a car object just by assigning a different engine object to the car.
+
+ 在这张图里，`engine`和`driver`都是`Transport`的一个filed。Because no transport no engine, this is a composition. `Driver` and `Transport` has different lifecycle, so it's an association.
+
+COMPOSITION: different “dimensions” of functionality extracted to their own class hierarchies. 所以class的数目不会爆炸，只会线性增长。
+
+This structure of classes resembles the ***Strategy*** pattern, which we’ll go over later in this book.
+
+<img src="./images/ch09composition.png" style="zoom:50%;" />
+
+# Ch10 SOLID Principles
+
+pg 49
 
 [TOC]
 
