@@ -411,9 +411,45 @@ This structure of classes resembles the ***Strategy*** pattern, which we’ll go
 
 <img src="./images/ch09composition.png" style="zoom:50%;" />
 
-# Ch10 SOLID Principles
+# Part 3.1 SOLID Principles
 
 pg 49
+
+Coined by Robert C. Martin. SOLID principles make software designs more understandable, flexible and maintainable.
+
+实际应用中，不可能会把所有的这5条都用上。要根据实际情况，不要教条主义。
+
+# Ch10 Single Responsibility Principle
+
+Pg 50
+
+***A class should have just one reason to change.***
+
+Try to make every class responsible for a single part of the functionality provided by the software, and make that responsibility entirely encapsulated by (you can also say hidden within) the class.
+
+如果程序只有200行，没必要。主要是程序可能越来越大，越来越难理解。第二点，要是class变的太大，每次要改东西，就可能会breaking other parts of the class which you didn’t even intend to change.
+
+If you feel that it’s becoming hard to focus on specific aspects of the program one at a time, remember the single responsibility principle and check whether it’s time to divide some classes into parts.
+
+## 10.1 Example
+
+比如我有一个`Employee`class，其中有个`printTimeSheetReport()`的函数，可能time sheet的形式一直会变化，所以这个函数一直要变。
+
+BEFORE: the class contains several different behaviors.
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch10employee.png" style="zoom:50%;" />
+
+AFTER: the extra behavior is in its own class. 我们把`TimeSheetReport` 单独做成以个类，就不用改`Employee`class了。
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch10employeeafter.png" style="zoom:50%;" />
+
+# Ch11Open/Closed Principle
+
+pg 51
+
+***Classes should be open for extension but closed for modification.***
+
+
 
 [TOC]
 
