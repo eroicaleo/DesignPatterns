@@ -449,6 +449,30 @@ pg 51
 
 ***Classes should be open for extension but closed for modification.***
 
+The main idea of this principle is to keep existing code from breaking when you implement new features.
+
+A class is open if you can extend it, produce a subclass and do whatever you want with it—add new methods or fields, override base behavior, etc. Some programming languages let you restrict further extension of a class with special keywords, such as `final` . After this, the class is no longer open. At the same time, the class is closed (you can also say complete) if it’s 100% ready to be used by other classes—its interface is clearly defined and won’t be changed in the future.
+
+如果一个class已经开发，测试完成，并且已经广泛应用了，那就不应该去修改它。应该去继承它，override它的原有功能。这样就不会break existing code。
+
+除非知道class里有bug。
+
+## 11.1 Example
+
+Ecommerce example. BEFORE: you have to change the Order class whenever you add a new shipping method to the app.
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch11orderbefore.png" style="zoom:50%;" />
+
+Use *Strategy* pattern, similar to ch09 example. Start by extracting shipping methods into separate classes with a common interface. AFTER: adding a new shipping method doesn’t require changing existing classes.
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch11orderafter.png" style="zoom:50%;" />
+
+Now when you need to implement a new shipping method, you can derive a new class from the Shipping interface without touching any of the Order class’ code. The client code of the Order class will link orders with a shipping object of the new class whenever the user selects this shipping methods in the UI.
+
+# Ch12 Liskov Substitution Principle1
+
+Pg 55
+
 
 
 [TOC]
