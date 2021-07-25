@@ -437,11 +437,11 @@ If you feel that it’s becoming hard to focus on specific aspects of the progra
 
 BEFORE: the class contains several different behaviors.
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch10employee.png" style="zoom:50%;" />
+<img src="./images/ch10employee.png" style="zoom:50%;" />
 
 AFTER: the extra behavior is in its own class. 我们把`TimeSheetReport` 单独做成以个类，就不用改`Employee`class了。
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch10employeeafter.png" style="zoom:50%;" />
+<img src="./images/ch10employeeafter.png" style="zoom:50%;" />
 
 # Ch11Open/Closed Principle
 
@@ -461,11 +461,11 @@ A class is open if you can extend it, produce a subclass and do whatever you wan
 
 Ecommerce example. BEFORE: you have to change the Order class whenever you add a new shipping method to the app.
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch11orderbefore.png" style="zoom:50%;" />
+<img src="./images/ch11orderbefore.png" style="zoom:50%;" />
 
 Use *Strategy* pattern, similar to ch09 example. Start by extracting shipping methods into separate classes with a common interface. AFTER: adding a new shipping method doesn’t require changing existing classes.
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch11orderafter.png" style="zoom:50%;" />
+<img src="./images/ch11orderafter.png" style="zoom:50%;" />
 
 Now when you need to implement a new shipping method, you can derive a new class from the Shipping interface without touching any of the Order class’ code. The client code of the Order class will link orders with a shipping object of the new class whenever the user selects this shipping methods in the UI.
 
@@ -647,7 +647,36 @@ You can solve the problem by redesigning the class hierarchy: a subclass should 
 
 Pg 62
 
+***Clients shouldn’t be forced to depend on methods they do not use.***
 
+Try to make your interfaces narrow enough that client classes don’t have to implement behaviors they don’t need.
+
+* break down “fat” interfaces into more granular and specific ones.
+* Clients should implement only those methods that they really need.
+
+Class can only have one superclass, but can implement multiple interfaces at the same time. No need to cram tons of unrelated methods into a single interface.
+
+Break it down into several more refined interfaces.
+
+## Example
+
+You have a library to makes it easy to integrate apps with various cloud computing providers. Intially, you only have Amazon, then you added support for Dropbox. Dropbox doesn't need to support several features.
+
+BEFORE: not all clients can satisfy the requirements of the bloated interface.
+
+<img src="./images/ch13before.png" style="zoom:50%;" />
+
+The better approach is to break down the interface into parts. Classes that are able to implement the original interface can now just implement several refined interfaces.
+
+AFTER: one bloated interface is broken down into a set of more granular interfaces.
+
+<img src="./images/ch13after.png" style="zoom:50%;" />
+
+As with the other principles, you can go too far with this one. Don’t further divide an interface which is already quite specific. Remember that the more interfaces you create, the more complex your code becomes. Keep the balance.
+
+# Ch14 Dependency Inversion Principle
+
+Pg 65
 
 [TOC]
 
