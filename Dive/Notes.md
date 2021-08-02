@@ -678,5 +678,53 @@ As with the other principles, you can go too far with this one. Don’t further 
 
 Pg 65
 
+***High-level classes shouldn’t depend on low-level classes. Both should depend on abstractions. Abstractions shouldn’t depend on details. Details should depend on abstractions.***
+
+SW usually have 2 classes:
+
+**Low-level** classes implement basic operations such as working with a disk, transferring data over a network, connecting to a database, etc.
+
+**High-level** classes contain complex business logic that directs low-level classes to do something.
+
+有时候大家先设计底层，因为根本不知道高层要做成什么样。这样设计高层的时候就会dependent on 底层。
+
+建议分这样三步：
+
+For starters, you need to describe interfaces for low-level operations that high-level classes rely on, preferably in business terms. For instance, business logic should call a method `openReport(file)` rather than a series of methods `openFile(x) , readBytes(n) , closeFile(x) `.
+
+Now you can make high-level classes dependent on those interfaces, instead of on concrete low-level classes. This dependency will be much softer than the original one.
+
+Once low-level classes implement these interfaces, they become dependent on the business logic level, reversing the direction of the original dependency.
+
+The dependency inversion principle often goes along with the *open/closed principle*: you can extend low-level classes to use with different business logic classes without breaking existing classes.
+
+## 14.1 Example
+
+High-level reporting class uses a low-level database class for reading and persisting its data. When a new version of the database server gets released, may affect the high-level class.
+
+BEFORE: a high-level class depends on a low-level class.
+
+<img src="./images/ch14before.png" style="zoom:50%;" />
+
+You can fix this problem by creating a high-level interface that describes read/write operations and making the reporting class use that interface instead of the low-level class.
+
+Then you can change or extend the original low-level class to implement the new read/write interface declared by the business logic.
+
+总之就是要先让high level把interface定好。
+
+AFTER: low-level classes depend on a high-level abstraction.
+
+<img src="./images/ch14after.png" style="zoom:50%;" />
+
+As a result, the direction of the original dependency has been inverted: low-level classes are now dependent on high-level abstractions.
+
+这话是关键，底层依赖高层。
+
+# Ch15 Factory Method
+
+Pg 72
+
+
+
 [TOC]
 
