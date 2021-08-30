@@ -720,11 +720,36 @@ As a result, the direction of the original dependency has been inverted: low-lev
 
 这话是关键，底层依赖高层。
 
+# Creational Design Patterns
+
+Pg 70
+
+* Factory Method: Provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created.
+
 # Ch15 Factory Method
 
 Pg 72
 
+Also known as: Virtual Constructor
+
+**Factory Method**: is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created.
+
+## Problem
+
+Logistics management app, first version only handles trunk transportation. So the bulk of your code lives inside the `Truck` class. 
+
+Later, customer wants to incorporate sea logistics. Two problems we are facing:
+
+* Adding `Ships` into the app would require making changes to the entire codebase.
+* Moreover, if later you decide to add another type of transportation to the app, you will probably need to make all of these changes again.
+
+## Solution
+
+The Factory Method pattern suggests that you replace direct object construction calls (using the `new` operator) with calls to a special factory method. Don’t worry: the objects are still created via the `new` operator, but it’s being called from within the factory method. Objects returned by a factory method are
+often referred to as “products.”
+
+* Subclasses can alter the class of objects being returned by the factory method.
 
 
-[TOC]
+<img src="./images/ch15logistics.png" style="zoom:50%;" />
 
