@@ -753,3 +753,28 @@ often referred to as “products.”
 
 <img src="./images/ch15logistics.png" style="zoom:50%;" />
 
+* In this example, `createTransport()` is the factory method. In base class, `createTransport` returns a `Transport` type.
+* In subclass, the class of products can be changed.
+* Some limitations with the factory method:
+  * subclasses may return different types of products only if these products have a common base class or interface.
+  * Also, the factory method in the base class should have its return type declared as this interface.
+* As shown in the figure below, all products must follow the same interface.
+
+<img src="./images/ch15logistics2.png" style="zoom:50%;" />
+
+* The code that uses the factory method (often called the client code) doesn’t see a difference between the actual products returned by various subclasses. The client treats all the products as abstract `Transport` .
+
+
+所以整个APP的结构就经历了如下变化。
+
+![](./images/ch15logappold.png)
+
+变身成
+
+![](./images/ch15logappnew.png)
+
+* 原本在client code里是 `Trunk` 的地方，都换成是 `Transport`. Then if add more types of `Transport`, as long as all product classes implement a common interface, the client code won't break.
+
+## Structure
+
+pg 76
