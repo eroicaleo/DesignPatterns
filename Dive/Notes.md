@@ -778,3 +778,22 @@ often referred to as “products.”
 ## Structure
 
 pg 76
+
+<img src="./images/ch15FMstructure.png" style="zoom:50%;" />
+
+1. The `Product` declares the interface, which is common to all objects that can be produced by the creator and its subclasses.
+2. `Concrete Products` are different implementations of the product interface.
+3. The `Creator` class declares the factory method that returns new product objects. It’s important that the return type of this method matches the product interface.
+   1. You can either make factory method as abstract to force all subclasses to implement their own versions.
+   2. Or the base factory method can return some default product type.
+   3. Note product creation is not the primary responsibility of the creator. Usually, the creator class already has some core business logic related to products. The factory method helps to decouple this logic from the concrete product classes.
+   4. Analogy: SW company have a training program, but its purpose is not to produce programmers.
+4. `Concrete Creators` override the base factory method so it returns a different type of product.
+   1. It can return an existing object from a cache, an object pool.
+
+## Pseudocode
+
+<img src="./images/ch15dialog.png" style="zoom:50%;" />
+
+* Scenario: creating cross-platform UI elements without coupling the client code to concrete UI classes.
+  * Under various operating systems, these elements may look a little bit different, but they should still behave consistently. A button in Windows is still a button in Linux.
