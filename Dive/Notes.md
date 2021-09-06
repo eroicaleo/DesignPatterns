@@ -797,3 +797,114 @@ pg 76
 
 * Scenario: creating cross-platform UI elements without coupling the client code to concrete UI classes.
   * Under various operating systems, these elements may look a little bit different, but they should still behave consistently. A button in Windows is still a button in Linux.
+
+* With factory method, you don’t need to rewrite the logic of the dialog for each OS.
+* We declare a factory method that produces buttons inside the base dialog class.
+  * Subclass returns Windows-styled button from the factory method.
+  * Subclass inherits most of the dialog’s code from the base class.
+* The base dialog class must work with abstract buttons.
+
+```java
+// The creator class declares the factory method that must
+// return an object of a product class. The creator's subclasses
+// usually provide the implementation of this method.
+class Dialog is
+  // The creator may also provide some default implementation
+  // of the factory method.
+  abstract method createButton()
+
+  // Note that, despite its name, the creator's primary
+  // responsibility isn't creating products. It usually
+  // contains some core business logic that relies on product
+  // objects returned by the factory method. Subclasses can
+  // indirectly change that business logic by overriding the
+  // factory method and returning a different type of product
+  // from it.
+  method render() is
+    // Call the factory method to create a product object.
+    Button okButton = createButton()
+    // Now use the product.
+    okButton.onClick(closeDialog)
+    okButton.render()
+
+
+// Concrete creators override the factory method to change the
+// resulting product's type.
+class WindowsDialog extends Dialog is
+  method createButton() is
+  return new WindowsButton()
+
+class WebDialog extends Dialog is
+  method createButton() is
+  return new HTMLButton()
+
+
+// The product interface declares the operations that all
+// concrete products must implement.
+interface Button is
+  method render()
+  method onClick(f)
+
+// Concrete products provide various implementations of the
+// product interface.
+class WindowsButton implements Button is
+  method render(a, b) is
+  // Render a button in Windows style.
+  method onClick(f) is
+  // Bind a native OS click event.
+
+class HTMLButton implements Button is
+  method render(a, b) is
+  // Return an HTML representation of a button.
+  method onClick(f) is
+  // Bind a web browser click event.
+
+
+class Application is
+  field dialog: Dialog
+
+  // The application picks a creator's type depending on the
+  // current configuration or environment settings.
+  method initialize() is
+  config = readApplicationConfigFile()
+
+  if (config.OS == "Windows") then
+    dialog = new WindowsDialog()
+  else if (config.OS == "Web") then
+    dialog = new WebDialog()
+  else
+    throw new Exception("Error! Unknown operating system.")
+
+  // The client code works with an instance of a concrete
+  // creator, albeit through its base interface. As long as
+  // the client keeps working with the creator via the base
+  // interface, you can pass it any creator's subclass.
+  method main() is
+    this.initialize()
+    dialog.render()
+```
+
+# 💡Applicability
+
+🐞 
+
+* **Use the Factory Method when you don’t know beforehand the exact types and dependencies of the objects your code should work with.**
+
+⚡
+
+* The Factory Method separates product construction code from the code that actually uses the product. Therefore it’s easier to extend the product construction code independently from the rest of the code.
+* To add a new product type to the app, you’ll only need to create a new creator subclass and override the factory method in it.
+
+🐞
+
+* **Use the Factory Method when you want to provide users of your library or framework with a way to extend its internal components.**
+
+⚡
+
+* Inheritance is probably the easiest way to extend the default behavior of a library or framework. But how would the framework recognize that your subclass should be used instead of a standard component?
+* The solution is to reduce the code that constructs components across the framework into a single factory method and let anyone override this method in addition to extending the component itself.
+* Use cases
+  * Our app is using an open source UI framework. Your app needs round buttons, but the framework only has square ones.
+  * We extend the standard `Button` class with a glorious `RoundButton` subclass.
+  * We also extend the `UIFramework` with `UIWithRoundButtons` and override `createButton` and make it returns `RoundButton`.
+  * Then we use `UIWithRoundButtons` class instead of  `UIFramework` class.
