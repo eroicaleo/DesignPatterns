@@ -884,7 +884,7 @@ class Application is
     dialog.render()
 ```
 
-# 💡Applicability
+## 💡Applicability
 
 🐞 
 
@@ -908,3 +908,32 @@ class Application is
   * We extend the standard `Button` class with a glorious `RoundButton` subclass.
   * We also extend the `UIFramework` with `UIWithRoundButtons` and override `createButton` and make it returns `RoundButton`.
   * Then we use `UIWithRoundButtons` class instead of  `UIFramework` class.
+
+🐞
+
+* **Use the Factory Method when you want to save system resources by reusing existing objects instead of rebuilding them each time.**
+
+⚡
+
+* Sometimes we are dealing with large, resource-intensive objects such as database connections, file systems, and network resources. Here is what has to be done to reuse an existing object:
+  * First, you need to create some storage to keep track of all of the created objects.
+  * When someone requests an object, the program should look for a free object inside that pool.
+  * then return it to the client code.
+  * If there are no free objects, the program should create a new one (and add it to the pool).
+* It's reasonable to put this code into the constructor of the class whose objects we’re trying to reuse. However, a constructor must always return **new objects** by definition. It can’t return existing
+  instances.
+* We need to have a regular method capable of creating new objects as well as reusing existing ones. That sounds very much like a factory method.
+
+## 📝 How to Implement
+
+  1. Make all products follow the same interface. This interface should declare methods that make sense in every product.
+  2. Add an empty factory method inside the creator class. The return type of the method should match the common product interface.
+  3. In the creator’s code find all references to product constructors. One by one, replace them with calls to the factory method, while extracting the product creation code into the factory method.
+    1. You might need to add a temporary parameter to the factory method to control the type of returned product.
+    2. the code of the factory method may look pretty ugly. It may have a large `switch` operator that picks which product class to instantiate.
+ 4. Now, create a set of creator subclasses for each type of product listed in the factory method. Override the factory method in the subclasses and extract the appropriate bits of construction code from the base method.
+ 5. If there are too many product types and it doesn’t make sense to create subclasses for all of them, you can reuse the control parameter from the base class in subclasses.
+     1. For instance, imagine that you have the following hierarchy of classes: the base `Mail` class with a couple of subclasses: `AirMail` and `GroundMail` ; the `Transport` classes are `Plane` , `Trunk` and `Train`.  `AirMail` and `GroundMail` are concrete creator.  `AirMail` only produces  `Plane` 
+        * `GroundMail` can produce either `Trunk` or `Train`, it depends on the argument passed by client code.
+        * Or we can create a  `TrainMail`  to handle `Train`. 
+ 6. If, after all of the extractions, the base factory method has become empty, you can make it abstract. If there’s something left, you can make it a default behavior of the method.
