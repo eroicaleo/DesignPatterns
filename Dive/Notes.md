@@ -948,3 +948,32 @@ class Application is
 ## ↔️ Relations with Other Patterns
 
 Pg 87 skip for now
+
+# Chapter 16 ABSTRACT FACTORY
+
+Pg 88
+
+**Abstract Factory** is a creational design pattern that lets you produce families of related objects without specifying their concrete classes.
+
+## 😟 Problem
+
+For a furniture shop:
+
+* A family of related products, say: `Chair` + `Sofa` + `CoffeeTable` .
+* Several variants of this family. For example, products `Chair + Sofa + CoffeeTable` are available in these variants: `Modern , Victorian , ArtDeco` .
+* You need a way to create individual furniture objects so that they match other objects of the same family. Customers get quite mad when they receive non-matching furniture.
+  * For example, you ordered 2 ArtDeco style chairs, then you received a Modern style Sofa.
+  * Also, you don’t want to change existing code when adding new products or families of products to the program. This might happen very often.
+
+## 😃 Solution
+
+* The first thing the Abstract Factory pattern suggests is to explicitly declare interfaces for each distinct product of the product family (e.g., `chair`, `sofa` or `coffee table`).
+* Then you can make all variants of products follow those interfaces:
+  * For example, all chair variants can implement the `Chair` interface.
+  * all coffee table variants can implement the `CoffeeTable` interface.
+* All variants of the same object must be moved to a single class hierarchy.
+
+<img src="./images/ch16variants.png" style="zoom:50%;" />
+
+* The next move is to declare the `Abstract Factory`—an interface with a list of creation methods for all products that are part of the product family (for example, `createChair` , `createSofa` and `createCoffeeTable` ).
+  * These methods must return **abstract** product types represented by the interfaces we extracted previously: `Chair` , `Sofa` , `CoffeeTable` and so on.
