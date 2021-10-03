@@ -977,3 +977,17 @@ For a furniture shop:
 
 * The next move is to declare the `Abstract Factory`—an interface with a list of creation methods for all products that are part of the product family (for example, `createChair` , `createSofa` and `createCoffeeTable` ).
   * These methods must return **abstract** product types represented by the interfaces we extracted previously: `Chair` , `Sofa` , `CoffeeTable` and so on.
+* For each variant of a product family, we create a separate factory class based on the `AbstractFactory` interface.
+  * A factory is a class that returns products of a particular kind. 
+  * For example, the ModernFactory can only create `ModernChair` , `ModernSofa` and `ModernCoffeeTable` objects.
+* Each concrete factory corresponds to a specific product variant.
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch16AFUML.png" style="zoom:50%;" />
+
+* The client code has to work with both factories and products via their respective abstract interfaces.
+
+* This lets you change the type of a factory that you pass to the client code, as well as the product variant that the client code receives, without breaking the actual client code.
+* With this approach, the only thing that the client knows about the chair is that it implements the `sitOn` method.
+* Also, whichever variant of the chair is returned, it’ll always match the type of sofa or coffee table produced by the same factory object.
+* One more thing left to clarify: if the client is only exposed to the abstract interfaces, what creates the actual factory objects? 
+  * Usually, the application creates a concrete factory object at the initialization stage. Just before that, the app must select the factory type depending on the configuration or the environment settings.
