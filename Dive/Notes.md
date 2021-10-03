@@ -991,3 +991,16 @@ For a furniture shop:
 * Also, whichever variant of the chair is returned, it’ll always match the type of sofa or coffee table produced by the same factory object.
 * One more thing left to clarify: if the client is only exposed to the abstract interfaces, what creates the actual factory objects? 
   * Usually, the application creates a concrete factory object at the initialization stage. Just before that, the app must select the factory type depending on the configuration or the environment settings.
+
+## 🌲 Structure
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch16AFUMLDetail.png" style="zoom:50%;" />
+
+1. **Abstract Products** declare interfaces for a set of distinct but related products which make up a product family.
+2. **Concrete Products** are various implementations of abstract products, grouped by variants. Each abstract product (chair/sofa) must be implemented in all given variants (Victorian/Modern).
+
+3. The **Abstract Factory** interface declares a set of methods for creating each of the abstract products.
+4. **Concrete Factories** implement creation methods of the abstract factory. Each concrete factory corresponds to a specific variant of products and creates only those product variants.
+5. Although concrete factories instantiate concrete products, signatures of their creation methods must return corresponding abstract products.
+   1. This way the client code that uses a factory doesn’t get coupled to the specific variant of the product it gets from a factory.
+   2. The `Client` can work with any concrete factory/product variant, as long as it communicates with their objects via abstract interfaces.
