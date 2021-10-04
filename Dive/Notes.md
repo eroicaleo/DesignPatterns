@@ -982,7 +982,7 @@ For a furniture shop:
   * For example, the ModernFactory can only create `ModernChair` , `ModernSofa` and `ModernCoffeeTable` objects.
 * Each concrete factory corresponds to a specific product variant.
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch16AFUML.png" style="zoom:50%;" />
+<img src="./images/ch16AFUML.png" style="zoom:50%;" />
 
 * The client code has to work with both factories and products via their respective abstract interfaces.
 
@@ -994,7 +994,7 @@ For a furniture shop:
 
 ## 🌲 Structure
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch16AFUMLDetail.png" style="zoom:50%;" />
+<img src="./images/ch16AFUMLDetail.png" style="zoom:50%;" />
 
 1. **Abstract Products** declare interfaces for a set of distinct but related products which make up a product family.
 2. **Concrete Products** are various implementations of abstract products, grouped by variants. Each abstract product (chair/sofa) must be implemented in all given variants (Victorian/Modern).
@@ -1004,3 +1004,103 @@ For a furniture shop:
 5. Although concrete factories instantiate concrete products, signatures of their creation methods must return corresponding abstract products.
    1. This way the client code that uses a factory doesn’t get coupled to the specific variant of the product it gets from a factory.
    2. The `Client` can work with any concrete factory/product variant, as long as it communicates with their objects via abstract interfaces.
+
+## ♯ Pseudocode
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch16UI.png" style="zoom:50%;" />
+
+* It works like this: when an application launches, it checks the type of the current operating system. The app uses this information to create a factory object from a class that matches the operating system. The rest of the code uses this factory to create UI elements. This prevents the wrong elements from being created.
+* the client code doesn’t depend on concrete classes of factories and UI elements as long as it works with these objects via their abstract interfaces. This also lets the client code support other factories or UI elements that you might add in the future.
+* You don’t need to modify the client code each time you add a new variation of UI elements to your app. You just have to create a new factory class that produces these elements and slightly modify the app’s initialization code so it selects that class when appropriate.
+
+
+```java
+ 1 // The abstract factory interface declares a set of methods that
+ 2 // return different abstract products. These products are called
+ 3 // a family and are related by a high-level theme or concept.
+ 4 // Products of one family are usually able to collaborate among
+ 5 // themselves. A family of products may have several variants,
+ 6 // but the products of one variant are incompatible with the
+ 7 // products of another variant.
+ 8 interface GUIFactory is
+ 9   method createButton():Button
+10   method createCheckbox():Checkbox
+   
+13 // Concrete factories produce a family of products that belong
+14 // to a single variant. The factory guarantees that the
+15 // resulting products are compatible. Signatures of the concrete
+16 // factory's methods return an abstract product, while inside
+17 // the method a concrete product is instantiated.
+18 class WinFactory implements GUIFactory is
+19   method createButton():Button is
+20     return new WinButton()
+21   method createCheckbox():Checkbox is
+22     return new WinCheckbox()
+
+24 // Each concrete factory has a corresponding product variant.
+25 class MacFactory implements GUIFactory is
+26   method createButton():Button is
+27     return new MacButton()
+28   method createCheckbox():Checkbox is
+29     return new MacCheckbox()
+
+33 // Each distinct product of a product family should have a base
+34 // interface. All variants of the product must implement this
+35 // interface.
+36 interface Button is
+37   method paint()
+
+39 // Concrete products are created by corresponding concrete
+40 // factories.
+41 class WinButton implements Button is
+42   method paint() is
+43     // Render a button in Windows style.
+44
+45 class MacButton implements Button is
+46   method paint() is
+47     // Render a button in macOS style.
+
+49 // Here's the base interface of another product. All products
+50 // can interact with each other, but proper interaction is
+51 // possible only between products of the same concrete variant.
+52 interface Checkbox is
+53   method paint()
+54
+55 class WinCheckbox implements Checkbox is
+56   method paint() is
+57     // Render a checkbox in Windows style.
+58
+59 class MacCheckbox implements Checkbox is
+60   method paint() is
+61     // Render a checkbox in macOS style.
+
+65 // The client code works with factories and products only
+66 // through abstract types: GUIFactory, Button and Checkbox. This
+67 // lets you pass any factory or product subclass to the client
+68 // code without breaking it.
+69 class Application is
+70   private field button: Button
+71   constructor Application(factory: GUIFactory) is
+72     this.factory = factory
+73   method createUI() is
+74     this.button = factory.createButton()
+75   method paint() is
+76     button.paint()
+
+79 // The application picks the factory type depending on the
+80 // current configuration or environment settings and creates it
+81 // at runtime (usually at the initialization stage).
+82 class ApplicationConfigurator is
+83   method main() is
+84     config = readApplicationConfigFile()
+85
+86   if (config.OS == "Windows") then
+87     factory = new WinFactory()
+88   else if (config.OS == "Mac") then
+89     factory = new MacFactory()
+90   else
+91     throw new Exception("Error! Unknown operating system.")
+92
+93     Application app = new Application(factory)
+```
+
