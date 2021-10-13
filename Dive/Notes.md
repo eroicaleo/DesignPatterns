@@ -1175,3 +1175,22 @@ new House(4,2,4,true,null,null,null,...);
 new House(4,2,4,true,true,true,true,...);
 ```
 
+* The **the constructor calls pretty ugly.**
+
+## 😃 Solution
+
+* The Builder pattern suggests that you extract the object construction code out of its own class and move it to separate objects called builders.
+* The Builder pattern lets you construct complex objects step by step. The Builder doesn’t allow other objects to access the product while it’s being built.
+
+<img src="./images/ch17solution.png" style="zoom:50%;" />
+
+* The pattern organizes object construction into a set of steps ( `buildWalls` , `buildDoor` , etc.).
+* The important part is that you don’t need to call all of the steps. You can call only those steps that are necessary for producing a particular configuration of an object.
+* Some steps might require different implementation:
+  * Cabin walls require wood
+  * Castle walls require stone
+* In this case, we can create several different builder classes that implement the same set of building steps, but in a different manner.
+  * Builder 1 only uses wood + glass -> build cabin
+  * Builder 2 only uses stone + iron -> build castle
+  * Builder 3 only uses gold + diamond -> build palace
+* This would only work if the client code that calls the building steps is able to interact with builders using a common interface.
