@@ -1007,7 +1007,7 @@ For a furniture shop:
 
 ## ♯ Pseudocode
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch16UI.png" style="zoom:50%;" />
+<img src="./images/ch16UI.png" style="zoom:50%;" />
 
 * It works like this: when an application launches, it checks the type of the current operating system. The app uses this information to create a factory object from a class that matches the operating system. The rest of the code uses this factory to create UI elements. This prevents the wrong elements from being created.
 * the client code doesn’t depend on concrete classes of factories and UI elements as long as it works with these objects via their abstract interfaces. This also lets the client code support other factories or UI elements that you might add in the future.
@@ -1123,3 +1123,55 @@ pg 100
 * Implement a set of concrete factory classes, one for each product variant.
 * Create factory initialization code somewhere in the app. It should instantiate one of the concrete factory classes, depending on the application configuration or the current environment. Pass this factory object to all classes that construct products.
 * Scan through the code and find all direct calls to product constructors. Replace them with calls to the appropriate creation method on the factory object.
+
+## ⚖️ Pros and Cons
+
+* ✅ You can be sure that the products you’re getting from a factory are compatible with each other.
+* ✅ You avoid tight coupling between concrete products and client code.
+* ✅ *Single Responsibility Principle*. You can move the product creation code into one place in the program, making the code easier to support.
+* ✅ *Open/Closed Principle*. You can introduce new types of products into the program without breaking existing client code.
+* ❌ The code may become more complicated since you need to introduce a lot of new subclasses to implement the pattern.
+
+## ↔️ Relations with Other Patterns
+
+Pg 102
+
+* Many designs start by using **<u>Factory Method</u>** (less complicated and more customizable via subclasses) and evolve toward **<u>Abstract Factory</u>**, **Prototype**, or **Builder** (more flexible, but more complicated).
+* **Builder** focuses on constructing complex objects step by step. **Abstract Factory** specializes in creating families of related objects. *Abstract Factory* returns the product immediately, whereas *Builder* lets you run some additional construction steps before fetching the product.
+* **Abstract Factory** classes are often based on a set of **Factory Methods**, but you can also use **Prototype** to compose the methods on these classes.
+* **<u>Abstract Factory</u>** can serve as an alternative to **<u>Facade</u>** when you only want to hide the way the subsystem objects are created from the client code.
+* You can use **<u>Abstract Factory</u>** along with **<u>Bridge</u>**. This pairing is useful when some abstractions defined by *Bridge* can only work with specific implementations. In this case, *Abstract Factory* can encapsulate these relations and hide the complexity from the client code.
+* **<u>Abstract Factories</u>**, **<u>Builders</u>** and **<u>Prototypes</u>** can all be implemented as **<u>Singletons</u>**.
+
+# Chapter 17 BUILDER
+
+Pg 104
+
+**Builder** is a creational design pattern that lets you construct complex objects step by step. The pattern allows you to produce different types and representations of an object using the same construction code.
+
+# 😟 Problem
+
+* A Complex object requires step-by-step initialization of many fields and nested objects.
+  * It is usually buried inside a monstrous constructor with lots of parameters.
+  * Or even worse: scattered all over the client code.
+* We can make the program too complex by creating a subclass for every possible configuration of an object.
+
+<img src="./images/ch17problem.png" style="zoom:50%;" />
+
+* We can have simple `House`, with only 4 walls, a floor, windows, a door. But we also want to build houses with fancy features.
+* The simplest solution is to extend the base `House` class and create a set of subclasses to cover all combinations of the parameters.
+  * We will have too many subclasses.
+  * Any new parameter will require more class hierarchy.
+* Another approach: create a giant constructor right in the base `House` class with all possible parameters.
+
+```java
+class House {
+  public House(windows, doors, rooms, hasGarage, hasSwimPool, hasStatus, ...) {
+    ...
+  }
+}
+
+new House(4,2,4,true,null,null,null,...);
+new House(4,2,4,true,true,true,true,...);
+```
+
