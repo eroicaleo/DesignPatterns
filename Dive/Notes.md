@@ -1149,7 +1149,7 @@ Pg 104
 
 **Builder** is a creational design pattern that lets you construct complex objects step by step. The pattern allows you to produce different types and representations of an object using the same construction code.
 
-# 😟 Problem
+## 😟 Problem
 
 * A Complex object requires step-by-step initialization of many fields and nested objects.
   * It is usually buried inside a monstrous constructor with lots of parameters.
@@ -1194,3 +1194,32 @@ new House(4,2,4,true,true,true,true,...);
   * Builder 2 only uses stone + iron -> build castle
   * Builder 3 only uses gold + diamond -> build palace
 * This would only work if the client code that calls the building steps is able to interact with builders using a common interface.
+
+### Director
+
+* You can go further and extract a series of calls to the builder steps you use to construct a product into a separate class called *director*.
+* The director class defines the order in which to execute the building steps, while the builder provides the implementation for those steps.
+* Director class is not absolutely necessary. However, the director class might be a good place to put various construction routines so you can reuse them across your program.
+* The director class hides details of product construction from client side.
+* The client only needs to associate a builder with a director, launch the construction with the director, and get the result from the builder.
+
+## 🌲 Structure
+
+<img src="./images/ch17structure.png" style="zoom:50%;" />
+
+1. The **Builder** interface declares product construction steps that are common to all types of builders.
+2. **Concrete Builders** provide different implementations of the construction steps. Concrete builders may produce products that don’t follow the common interface.
+3. **Products** are resulting objects. Products constructed by different builders don’t have to belong to the same class hierarchy or interface.
+4. The **Director** class defines the order in which to call construction steps, so you can create and reuse specific configurations of products.
+5. The **Client** must associate one of the builder objects with the director. Usually, it’s done just once, via parameters of the director’s constructor. Then the director uses that builder object for all further construction. However, there’s an alternative approach for when the client passes the builder object to the production method of the director. In this case, you can use a different builder each time you produce something with the director.
+
+## ♯ Pseudocode
+
+* In this example, we will use the same object construction code to build cars, and create the corresponding manuals for them.
+
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch17pseudocode.png" style="zoom:50%;" />
+
+* Car is a complex class, and we don't want to a huge constructor. So we extracted the car assembly code into a separate car builder class. This class has a set of methods for configuring various parts of a car.
+* The client code can work with builder directly or can delegate the assembly to the director class.
+
+pg 113
