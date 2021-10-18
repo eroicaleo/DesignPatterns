@@ -1221,5 +1221,178 @@ new House(4,2,4,true,true,true,true,...);
 
 * Car is a complex class, and we don't want to a huge constructor. So we extracted the car assembly code into a separate car builder class. This class has a set of methods for configuring various parts of a car.
 * The client code can work with builder directly or can delegate the assembly to the director class.
+* Car manual describes every part of the car, every car differs so it makes sense to reuse an exist-
+  ing construction process for both real cars and their respective manuals.
+* The `CarManualBuilder` class implements the same building methods as its car-building sibling, but instead of crafting car parts, it describes them.
+* By passing these builders to the same director object, we can construct either a car or a manual.
+* Finally, we can’t place a method for fetching results in the director without coupling the director to concrete product classes. Hence, we obtain the result of the construction from the builder which performed the job.
 
-pg 113
+```java
+ 1 // Using the Builder pattern makes sense only when your products
+ 2 // are quite complex and require extensive configuration. The
+ 3 // following two products are related, although they don't have
+ 4 // a common interface.
+ 5 class Car is
+ 6 // A car can have a GPS, trip computer and some number of
+ 7 // seats. Different models of cars (sports car, SUV,
+ 8 // cabriolet) might have different features installed or
+ 9 // enabled.
+10
+11 class Manual is
+12 // Each car should have a user manual that corresponds to
+13 // the car's configuration and describes all its features.
+
+ 16 // The builder interface specifies methods for creating the
+ 17 // different parts of the product objects.
+ 18 interface Builder is
+ 19   method reset()
+ 20   method setSeats(...)
+ 21   method setEngine(...)
+ 22   method setTripComputer(...)
+ 23   method setGPS(...)
+ 24
+ 25 // The concrete builder classes follow the builder interface and
+ 26 // provide specific implementations of the building steps. Your
+ 27 // program may have several variations of builders, each
+ 28 // implemented differently.
+ 29 class CarBuilder implements Builder is
+ 30   private field car:Car
+
+ 33 // A fresh builder instance should contain a blank product
+ 34 // object which it uses in further assembly.
+ 35 constructor CarBuilder() is
+ 36   this.reset()
+ 37
+ 38 // The reset method clears the object being built.
+ 39 method reset() is
+ 40   this.car = new Car()
+ 41
+ 42 // All production steps work with the same product instance.
+ 43 method setSeats(...) is
+ 44   // Set the number of seats in the car.
+ 45
+ 46 method setEngine(...) is
+ 47   // Install a given engine.
+ 48
+ 49 method setTripComputer(...) is
+ 50   // Install a trip computer.
+ 51
+ 52 method setGPS(...) is
+ 53   // Install a global positioning system.
+
+ 55 // Concrete builders are supposed to provide their own
+ 56 // methods for retrieving results. That's because various
+ 57 // types of builders may create entirely different products
+ 58 // that don't all follow the same interface. Therefore such
+ 59 // methods can't be declared in the builder interface (at
+ 60 // least not in a statically-typed programming language).
+ 61 //
+ 62 // Usually, after returning the end result to the client, a
+ 63 // builder instance is expected to be ready to start
+ 64 // producing another product. That's why it's a usual
+ 65 // practice to call the reset method at the end of the
+ 66 // `getProduct` method body. However, this behavior isn't
+ 67 // mandatory, and you can make your builder wait for an
+ 68 // explicit reset call from the client code before disposing
+ 69 // of the previous result.
+ 70 method getProduct():Car is
+ 71   product = this.car
+ 72   this.reset()
+ 73   return product
+
+ 75 // Unlike other creational patterns, builder lets you construct
+ 76 // unrelated products that don't follow a common interface.
+ 77 class CarManualBuilder implements Builder is
+ 78   private field manual:Manual
+ 79
+ 80 constructor CarManualBuilder() is
+ 81   this.reset()
+ 82
+ 83 method reset() is
+ 84   this.manual = new Manual()
+ 85
+ 86 method setSeats(...) is
+ 87   // Document car seat features.
+ 88
+ 89 method setEngine(...) is
+ 90   // Add engine instructions.
+ 91
+ 92 method setTripComputer(...) is
+ 93   // Add trip computer instructions.
+ 94
+ 95 method setGPS(...) is
+ 96   // Add GPS instructions.
+ 97 method getProduct():Manual is
+ 98   // Return the manual and reset the builder.
+ 99
+100
+101 // The director is only responsible for executing the building
+102 // steps in a particular sequence. It's helpful when producing
+103 // products according to a specific order or configuration.
+104 // Strictly speaking, the director class is optional, since the
+105 // client can control builders directly.
+106 class Director is
+107   private field builder:Builder
+108
+109   // The director works with any builder instance that the
+110   // client code passes to it. This way, the client code may
+111   // alter the final type of the newly assembled product.
+112   method setBuilder(builder:Builder)
+113     this.builder = builder
+
+115   // The director can construct several product variations
+116   // using the same building steps.
+117   method constructSportsCar(builder: Builder) is
+118     builder.reset()
+119     builder.setSeats(2)
+120     builder.setEngine(new SportEngine())
+121     builder.setTripComputer(true)
+122     builder.setGPS(true)
+123
+124   method constructSUV(builder: Builder) is
+125     // ...
+
+129 // The client code creates a builder object, passes it to the
+130 // director and then initiates the construction process. The end
+131 // result is retrieved from the builder object.
+132 class Application is
+133
+134   method makeCar() is
+135     director = new Director()
+136
+137     CarBuilder builder = new CarBuilder()
+138     director.constructSportsCar(builder)
+139     Car car = builder.getProduct()
+140
+141     CarManualBuilder builder = new CarManualBuilder()
+142     director.constructSportsCar(builder)
+143
+144     // The final product is often retrieved from a builder
+145     // object since the director isn't aware of and not
+146     // dependent on concrete builders and products.
+147     Manual manual = builder.getProduct()
+```
+
+## 💡Applicability
+
+* 🐞 **Use the Builder pattern to get rid of a “telescopic constructor”.**
+* ⚡Assume we have a constructor with 10 optional parameters. Calling it is very inconvenient. So we might create some shorter version.
+  * The following is only possible in languages that support method overloading, such as C# or Java.
+  * The Builder pattern lets you build objects step by step, using only those steps that you really need. After implementing the pattern, you don’t have to cram dozens of parameters into your constructors anymore.
+
+```java
+1 class Pizza {
+2   Pizza(int size) { ... }
+3   Pizza(int size, boolean cheese) { ... }
+4   Pizza(int size, boolean cheese, boolean pepperoni) { ... }
+5   // ...
+```
+
+* 🐞 **Use the Builder pattern when you want your code to be able to create different representations of some product (for example, stone and wooden houses).**
+* ⚡The Builder pattern can be applied when construction of various representations of the product involves similar steps that differ only in the details.
+* ⚡The base builder interface defines all possible construction steps, and concrete builders implement these steps to construct particular representations of the product. Meanwhile, the director class guides the order of construction.
+* **🐞 Use the Builder to construct <u>Composite</u> trees or other complex objects.**
+* ⚡The Builder pattern lets you construct products step-by-step. You could defer execution of some steps without breaking the final product. You can even call steps recursively, which comes in handy when you need to build an object tree.
+* ⚡A builder doesn’t expose the unfinished product while running construction steps. This prevents the client code from fetching an incomplete result.
+
+pg 120
