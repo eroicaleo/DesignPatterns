@@ -1395,4 +1395,29 @@ new House(4,2,4,true,true,true,true,...);
 * ⚡The Builder pattern lets you construct products step-by-step. You could defer execution of some steps without breaking the final product. You can even call steps recursively, which comes in handy when you need to build an object tree.
 * ⚡A builder doesn’t expose the unfinished product while running construction steps. This prevents the client code from fetching an incomplete result.
 
+## 📝 How to Implement
+
+1. Make sure that you can clearly define the common construction steps for building all available product representations. Otherwise, you won’t be able to proceed with implementing the pattern.
+2. Declare these steps in the base builder interface.
+3. Create a concrete builder class for each of the product representations and implement their construction steps.
+   1. Don’t forget about implementing a method for fetching the result of the construction, e.g. `getProduct` or `getResult`. We don't want to put it in the interface, because various builders may construnct product that don’t have a common interface.
+4. Think about creating a director class. It may encapsulate various ways to construct a product using the same builder object.
+5. The client code creates both the builder and the director objects. Before construction starts, the client must pass a builder object to the director.
+   1. Usually, the client does this only once, via parameters of the director’s constructor. The director
+      uses the builder object in all further construction.
+   2. There’s an alternative approach, where the builder is passed directly to the construction method of the director.
+6. The construction result can be obtained directly from the director only if all products follow the same interface. Otherwise, the client should fetch the result from the builder.
+
+## ⚖️ Pros and Cons
+
+* ✅ You can construct objects step-by-step, defer construction steps or run steps recursively.
+* ✅ You can reuse the same construction code when building various representations of products.
+* ✅ *Single Responsibility Principle*. You can isolate complex construction code from the business logic of the product.
+* ❌ The overall complexity of the code increases since the pattern requires creating multiple new classes.
+
+## ↔️ Relations with Other Patterns
+
+* Many designs start by using **<u>Factory Method</u>** (less complicated and more customizable via subclasses) and evolve toward **<u>Abstract Factory</u>**, **<u>Prototype</u>**, or **<u>Builder</u>** (more flexible, but more complicated).
+* **<u>Builder</u>** focuses on constructing complex objects step by step. **<u>Abstract Factory</u>** specializes in creating families of related objects. *Abstract Factory* returns the product immediately, whereas *Builder* lets you run some additional construction steps before fetching the product.
+
 pg 120
