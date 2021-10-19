@@ -1419,5 +1419,8 @@ new House(4,2,4,true,true,true,true,...);
 
 * Many designs start by using **<u>Factory Method</u>** (less complicated and more customizable via subclasses) and evolve toward **<u>Abstract Factory</u>**, **<u>Prototype</u>**, or **<u>Builder</u>** (more flexible, but more complicated).
 * **<u>Builder</u>** focuses on constructing complex objects step by step. **<u>Abstract Factory</u>** specializes in creating families of related objects. *Abstract Factory* returns the product immediately, whereas *Builder* lets you run some additional construction steps before fetching the product.
+* You can use **<u>Builder</u>** when creating complex **<u>Composite</u>** trees because you can program its construction steps to work recursively.
+* You can combine **<u>Builder</u>** with **<u>Bridge</u>**: the *director* class plays the role of the abstraction, while different *builders* act as *implementations*.
+* **<u>Abstract Factories</u>**, **<u>Builders</u>** and **<u>Prototypes</u>** can all be implemented as **<u>Singletons</u>**.
 
-pg 120
+pg 122
