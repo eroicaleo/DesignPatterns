@@ -11,7 +11,7 @@ class Builder(ABC):
 
     @property
     @abstractmethod
-    def produce(self) -> None:
+    def product(self) -> None:
         pass
 
     @abstractmethod
@@ -41,7 +41,7 @@ class ConcreteBuilder1(Builder):
         self._product = Product1()
 
     @property
-    def produce(self) -> Product1:
+    def product(self) -> Product1:
         """
         Concrete Builders are supposed to provide their own methods for
         retrieving results. That's because various types of builders may create
@@ -90,7 +90,56 @@ class Director:
     optional, since the client can control builders directly.
     """
 
-    
+    def __init__(self) -> None:
+        self._builder = None
+
+    @property
+    def builder(self) -> Builder:
+        return self._builder
+
+    @builder.setter
+    def builder(self, builder: Builder) -> None:
+        """
+        The Director works with any builder instance that the client code passes
+        to it. This way, the client code may alter the final type of the newly
+        assembled product.
+        """
+        self._builder = builder
+
+    """
+    The Director can construct several product variations using the same
+    building steps.
+    """
+
+    def build_minimal_viable_product(self) -> None:
+        self.builder.produce_part_a()
+
+    def build_full_featured_product(self) -> None:
+        self.builder.produce_part_a()
+        self.builder.produce_part_b()
+        self.builder.produce_part_c()
+
 
 if __name__ == '__main__':
     print('Hello Builder Pattern!')
+
+    director = Director()
+    builder = ConcreteBuilder1()
+    director.builder = builder
+
+    print("Standard basic product: ")
+    director.build_minimal_viable_product()
+    builder.product.list_parts()
+
+    print("\n")
+
+    print("Standard full featured product: ")
+    director.build_full_featured_product()
+    builder.product.list_parts()
+
+    print("\n")
+    
+    print("Custom product: ")
+    builder.produce_part_a()
+    builder.produce_part_b()
+    builder.product.list_parts()
