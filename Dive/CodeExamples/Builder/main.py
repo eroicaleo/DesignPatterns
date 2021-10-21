@@ -138,7 +138,7 @@ if __name__ == '__main__':
     builder.product.list_parts()
 
     print("\n")
-    
+
     print("Custom product: ")
     builder.produce_part_a()
     builder.produce_part_b()
