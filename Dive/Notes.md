@@ -1453,5 +1453,19 @@ new House(4,2,4,true,true,true,true,...);
 
 * A closer analogy to the pattern is the process of mitotic cell division (biology, remember?). After mitotic division, a pair of identical cells is formed. The original cell acts as a prototype and takes an active role in creating the copy.
 
+## 🌲 Structure
 
-pg 122
+<img src="./images/ch18structurebasic.png" style="zoom:50%;" />
+
+1. The **Prototype** interface declares the cloning methods. In most cases, it’s a single `clone` method.
+2. The **Concrete Prototype** class implements the cloning method. In addition to copying the original object’s data to the clone, this method may also handle some edge cases of the cloning process related to cloning linked objects, untangling recursive dependencies, etc.
+3. The **Client** can produce a copy of any object that follows the prototype interface.
+
+### **Prototype registry implementation**
+
+<img src="./images/ch18structureregistry.png" style="zoom:50%;" />
+
+1. The **Prototype Registry** provides an easy way to access frequently-used prototypes. It stores a set of pre-built objects that are ready to be copied. The simplest prototype registry is a name → prototype hash map. However, if you need better search criteria than a simple name, you can build a much more robust version of the registry.
+
+
+pg 129
