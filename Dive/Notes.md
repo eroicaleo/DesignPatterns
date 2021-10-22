@@ -1467,5 +1467,56 @@ new House(4,2,4,true,true,true,true,...);
 
 1. The **Prototype Registry** provides an easy way to access frequently-used prototypes. It stores a set of pre-built objects that are ready to be copied. The simplest prototype registry is a name → prototype hash map. However, if you need better search criteria than a simple name, you can build a much more robust version of the registry.
 
+## ♯Pseudocode
+
+* In this example, the **Prototype** pattern lets you produce exact copies of geometric objects, without coupling the code to their classes.
+
+<img src="./images/ch18Pseudocode.png" style="zoom:50%;" />
+
+* All shape classes follow the same interface, which provides a cloning method. A subclass may call the parent’s cloning method before copying its own field values to the resulting object.
+
+```java
+ 1 // Base prototype.
+ 2 abstract class Shape is
+ 3   field X: int
+ 4   field Y: int
+ 5   field color: string
+ 6
+ 7   // A regular constructor.
+ 8   constructor Shape() is
+ 9     // ...
+10
+11   // The prototype constructor. A fresh object is initialized
+12   // with values from the existing object.
+13   constructor Shape(source: Shape) is
+14     this()
+15     this.X = source.X
+16     this.Y = source.Y
+17     this.color = source.color
+18
+19   // The clone operation returns one of the Shape subclasses.
+20   abstract method clone():Shape
+21
+22
+23 // Concrete prototype. The cloning method creates a new object
+24 // and passes it to the constructor. Until the constructor is
+25 // finished, it has a reference to a fresh clone. Therefore,
+26 // nobody has access to a partly-built clone. This keeps the
+27 // cloning result consistent.
+28 class Rectangle extends Shape is
+29   field width: int
+30   field height: int
+31
+32   constructor Rectangle(source: Rectangle) is
+33     // A parent constructor call is needed to copy private
+34     // fields defined in the parent class.
+35     super(source)
+36     this.width = source.width
+37     this.height = source.height
+38
+39   method clone():Shape is
+40     return new Rectangle(this)
+```
+
 
 pg 129
