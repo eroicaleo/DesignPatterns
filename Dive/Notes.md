@@ -1516,7 +1516,58 @@ new House(4,2,4,true,true,true,true,...);
 38
 39   method clone():Shape is
 40     return new Rectangle(this)
+41
+42
+43 class Circle extends Shape is
+44   field radius: int
+45
+46   constructor Circle(source: Circle) is
+47     super(source)
+48     this.radius = source.radius
+49
+50   method clone():Shape is
+51     return new Circle(this)
+52
+53
+54 // Somewhere in the client code.
+55 class Application is
+56   field shapes: array of Shape
+57
+58   constructor Application() is
+59     Circle circle = new Circle()
+60     circle.X = 10
+61     circle.Y = 10
+62     circle.radius = 20
+63     shapes.add(circle)
+64
+65     Circle anotherCircle = circle.clone()
+66     shapes.add(anotherCircle)
+67     // The `anotherCircle` variable contains an exact copy
+68     // of the `circle` object.
+69
+70     Rectangle rectangle = new Rectangle()
+71     rectangle.width = 10
+72     rectangle.height = 20
+73     shapes.add(rectangle)
+74
+75   method businessLogic() is
+76     // Prototype rocks because it lets you produce a copy of
+77     // an object without knowing anything about its type.
+78     Array shapesCopy = new Array of Shapes.
+79
+80     // For instance, we don't know the exact elements in the
+81     // shapes array. All we know is that they are all
+82     // shapes. But thanks to polymorphism, when we call the
+83     // `clone` method on a shape the program checks its real
+84     // class and runs the appropriate clone method defined
+85     // in that class. That's why we get proper clones
+86     // instead of a set of simple Shape objects.
+87     foreach (s in shapes) do
+88       shapesCopy.add(s.clone())
+89
+90     // The `shapesCopy` array contains exact copies of the
+91     // `shape` array's children.
 ```
 
 
-pg 129
+pg 133
