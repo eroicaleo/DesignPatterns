@@ -1608,5 +1608,8 @@ method clone():Shape is // explicitly override
 * **<u>Abstract Factory</u>** classes are often based on a set of **<u>Factory Methods</u>**, but you can also use **<u>Prototype</u>** to compose the methods on these classes.
 * **<u>Prototype</u>** can help when you need to save copies of **<u>Commands</u>** into history.
 * Designs that make heavy use of **<u>Composite</u>** and **<u>Decorator</u>** can often benefit from using **<u>Prototype</u>**. Applying the pattern lets you clone complex structures instead of re-constructing them from scratch.
+* **<u>Prototype</u>** isn’t based on inheritance, so it doesn’t have its drawbacks. On the other hand, *Prototype* requires a complicated initialization of the cloned object. **<u>Factory Method</u>** is based on inheritance but doesn’t require an initialization step.
+* Sometimes **<u>Prototype</u>** can be a simpler alternative to **<u>Memento</u>**. This works if the object, the state of which you want to store in the history, is fairly straightforward and doesn’t have links to external resources, or the links are easy to re-establish.
+* **<u>Abstract Factories</u>**, **<u>Builders</u>** and **<u>Prototypes</u>** can all be implemented as Singletons.
 
-pg 133
+pg 136
