@@ -1612,4 +1612,34 @@ method clone():Shape is // explicitly override
 * Sometimes **<u>Prototype</u>** can be a simpler alternative to **<u>Memento</u>**. This works if the object, the state of which you want to store in the history, is fairly straightforward and doesn’t have links to external resources, or the links are easy to re-establish.
 * **<u>Abstract Factories</u>**, **<u>Builders</u>** and **<u>Prototypes</u>** can all be implemented as Singletons.
 
+## Notes On Example Code
+
+### Python
+
+* About `copy.copy`.
+  * If you copy a list, it looks like it's deep copy.
+  * If you put the list in a dictionary, it's like shallow copy.
+
+```python
+l1 = [1, {1, 2, 3}, [1, 2, 3]]
+d1 = {0: l1}
+d2 = copy.copy(d1)
+l1.append('another')
+print(d2, d1)
+# {0: [1, {1, 2, 3}, [1, 2, 3], 'another']} {0: [1, {1, 2, 3}, [1, 2, 3], 'another']}
+
+print(l2, l1)
+# [1, {1, 2, 3}, [1, 2, 3]] [1, {1, 2, 3}, [1, 2, 3], 'another']
+
+```
+
+* To check the ID of an object, use `id` function.
+
+```python
+print(
+        f"id(deep_copied_component.some_circular_ref.parent): "
+        f"{id(deep_copied_component.some_circular_ref.parent)}"
+    )
+```
+
 pg 136
