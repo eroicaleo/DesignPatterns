@@ -1659,4 +1659,42 @@ The **Singleton** pattern solves two problems at the same time, violating the *S
 
 It’s much better to have it within one class.
 
-pg 139
+## 😃 Solution
+
+* All implementations of the Singleton have these two steps in common:
+  * Make the default constructor private, to prevent other objects from using the `new` operator with the Singleton class.
+  * Create a static creation method that acts as a constructor. Under the hood, this method calls the private constructor to create an object and saves it in a static field. All following calls to this method return the cached object.
+* If your code has access to the Singleton class, then it’s able to call the Singleton’s static method. So whenever that method is called, the same object is always returned.
+
+## 🚗 Real-World Analogy
+
+* A country can have only one official government. “The Government of X”, is a global point of access that identifies the group of people in charge.
+
+## 🌲 Structure
+
+<img src="./images/ch19structure.png" style="zoom:50%;" />
+
+* The **Singleton** class declares the static method `getInstance` that returns the same instance of its own class.
+* The Singleton’s constructor should be hidden from the client code. Calling the `getInstance` method should be the only way of getting the Singleton object.
+
+## ♯Pseudocode
+
+* In this example, the database connection class acts as a **Singleton**.
+* This class doesn’t have a public constructor, so the only way to get its object is to call the `getInstance` method. This method caches the first created object and returns it in all subsequent calls.
+
+```java
+ 1 // The Database class defines the `getInstance` method that lets
+ 2 // clients access the same instance of a database connection
+ 3 // throughout the program.
+ 4 class Database is
+ 5   // The field for storing the singleton instance should be
+ 6   // declared static.
+ 7   private static field instance: Database
+ 8
+ 9   // The singleton's constructor should always be private to
+10   // prevent direct construction calls with the `new`
+11   // operator.
+12   private constructor Database() is
+```
+
+pg 141
