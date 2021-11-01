@@ -1642,4 +1642,21 @@ print(
     )
 ```
 
-pg 136
+# Chapter 19 SINGLETON
+
+**Singleton** is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.
+
+## 😟 Problem
+
+The **Singleton** pattern solves two problems at the same time, violating the *Single Responsibility Principle*:
+
+1. **Ensure that a class has just a single instance.** 当我们 control access to some shared
+   resource—for example, a database or a file.
+   1. We create a new object, then create another one. Instead of receiving the new one, we will receive the one we already created.
+   2. Regular constructor cannot do this because a constructor call **must** always return a new object by design.
+2. **Provide a global access point to that instance**. Although global variables are very handy, but it's also unsafe. Any code can overwrite the contents and make the App crash.
+   1. Single pattern lets you access some object from anywhere, but also protects that instance from being overwritten by other code.
+
+It’s much better to have it within one class.
+
+pg 139
