@@ -1695,6 +1695,58 @@ It’s much better to have it within one class.
 10   // prevent direct construction calls with the `new`
 11   // operator.
 12   private constructor Database() is
+13     // Some initialization code, such as the actual
+14     // connection to a database server.
+15     // ...
+16
+17   // The static method that controls access to the singleton
+18   // instance.
+19   public static method getInstance() is
+20     if (this.instance == null) then
+21       acquireThreadLock() and then
+22       // Ensure that the instance hasn't yet been
+23       // initialized by another thread while this one
+24       // has been waiting for the lock's release.
+25       if (this.instance == null) then
+26         this.instance = new Database()
+27     return this.instance
+28
+29   // Finally, any singleton should define some business logic
+30   // which can be executed on its instance.
+31   public method query(sql) is
+32     // For instance, all database queries of an app go
+33     // through this method. Therefore, you can place
+34     // throttling or caching logic here.
+35     // ...
+36
+37 class Application is
+38   method main() is
+39     Database foo = Database.getInstance()
+40     foo.query("SELECT ...")
+41     // ...
+42     Database bar = Database.getInstance()
+43     bar.query("SELECT ...")
+44     // The variable `bar` will contain the same object as
+45     // the variable `foo`.
 ```
+
+## 💡Applicability
+
+* 🐞 **Use the Singleton pattern when a class in your program should have just a single instance available to all clients; for example, a single database object shared by different parts of the program.**
+* ⚡The Singleton pattern disables all other means of creating objects of a class except for the special creation method. This method either creates a new object or returns an existing one if it has already been created.
+* 🐞**Use the Singleton pattern when you need stricter control over global variables.**
+* ⚡Unlike global variables, the Singleton pattern guarantees that there’s just one instance of a class. Nothing, except for the Singleton class itself, can replace the cached instance.
+  * Note that you can always adjust this limitation and allow creating any number of Singleton instances. The only piece of code that needs changing is the body of the `getInstance()` method.
+
+## 📝 How to Implement
+
+1. Add a private static field to the class for storing the singleton instance.
+
+2. Declare a public static creation method for getting the singleton instance.
+
+3. Implement “lazy initialization” inside the static method. It should create a new object on its first call and put it into the static field. The method should always return that instance on all subsequent calls.
+4. Make the constructor of the class private. The static method of the class will still be able to call the constructor, but not the other objects.
+
+5. Go over the client code and replace all direct calls to the singleton’s constructor with calls to its static creation method.
 
 pg 141
