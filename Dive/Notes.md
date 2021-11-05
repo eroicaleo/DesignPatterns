@@ -1765,4 +1765,15 @@ It’s much better to have it within one class.
   * The *Singleton* object can be mutable. Flyweight objects are immutable.
 * **<u>Abstract Factories</u>**, **<u>Builders</u>** and **<u>Prototypes</u>** can all be implemented as **<u>Singletons</u>**.
 
+# Structural Design Patterns
+
+* Structural patterns explain how to assemble objects and classes into larger structures, while keeping this structures flexible and efficient
+* ***<u>Adapter</u>***: Provides a unified interface that allows objects with incomeatible interfaces to collaborate.
+* **<u>*Bridge*</u>**: Lets you split a large class or a set of closely related classes into two seperate hierarchies - abstraction and implementation - which can be developed independently of each other.
+* ***<u>Composite</u>***: Lets you composite objects into tree structures and then work with these structures as if they were individual objects.
+* ***<u>Decorator</u>***:Lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors.
+* **<u>*Facade*</u>**: Provides a simplified interface to a library, a framework,  or any other complex set of classes.
+* ***<u>Flyweight</u>***: Lets you fit more objects into the available amount of RAM by sharing common parts of state between multiple objects, instead of keeping all of the data in each object.
+* ***<u>Proxy</u>***:Lets you
+
 pg 146
