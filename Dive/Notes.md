@@ -1774,6 +1774,41 @@ It’s much better to have it within one class.
 * ***<u>Decorator</u>***:Lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors.
 * **<u>*Facade*</u>**: Provides a simplified interface to a library, a framework,  or any other complex set of classes.
 * ***<u>Flyweight</u>***: Lets you fit more objects into the available amount of RAM by sharing common parts of state between multiple objects, instead of keeping all of the data in each object.
-* ***<u>Proxy</u>***:Lets you
+* ***<u>Proxy</u>***:Lets you provide a substitute or placeholder for another project. A proxy controls access to the original object, allowing you to perform something either before or after the request gets through to the original object.
 
-pg 146
+# Chapter 20 Adapter
+
+* **Adapter** is a structural design pattern that allows objects with incompatible interfaces to collaborate.
+
+## 😟 Problem
+
+* We have a stock monitoring app which downloads data from multiple sources in XML format.
+* Then we decided to integrate the a 3rd-party analytics library which only works with JSON format.
+
+<img src="./images/ch20problem.png" style="zoom:50%;" />
+
+* One approach is to change the libray to work with XML format.
+  * We might break some existing code
+  * We might not be able to access the source the code.
+
+## 😃 Solution
+
+* You can create an *adapter*. This is a special object that converts the interface of one object so that another object can understand it.
+* Here’s how it works:
+  * The adapter gets an interface, compatible with one of the existing objects.
+  * Using this interface, the existing object can safely call the adapter’s methods.
+  * Upon receiving a call, the adapter passes the request to the second object, but in a format and order that the second object expects.
+* We can create XML-to-JSON adapters for every class of the analytics library that your code works
+  with directly.
+* Then you adjust your code to communicate with the library only via these adapters.
+* When an adapter receives a call, it translates the incoming XML data into a JSON structure and passes the call to the appropriate methods of a wrapped analytics object.
+
+<img src="./images/ch20Solution.png" style="zoom:50%;" />
+
+## 🚗 Real-World Analogy
+
+* When travel from US to Europe, the power outlet is different.
+* The problem can be solved by using a power plug adapter that has the American-style socket and the European-style plug.
+
+
+pg 149
