@@ -1834,5 +1834,96 @@ It’s much better to have it within one class.
 
 1. The **Class Adapter** doesn’t need to wrap any objects because it inherits behaviors from both the client and the service. The adaptation happens within the overridden methods. The resulting adapter can be used in place of an existing client class.
 
+## ♯Pseudocode
 
-pg 157
+<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch20pcode.png" style="zoom:50%;" />
+
+* This example of the **Adapter** pattern is based on the classic conflict between square pegs and round holes.
+* The Adapter pretends to be a round peg, with a radius equal to a half of the square’s diameter (in other words, the radius of the smallest circle that can accommodate the square peg).
+
+```java
+1  // Say you have two classes with compatible interfaces:
+2  // RoundHole and RoundPeg.
+3  class RoundHole is
+4    constructor RoundHole(radius) { ... }
+5
+6    method getRadius() is
+7      // Return the radius of the hole.
+8  
+9    method fits(peg: RoundPeg) is
+10     return this.getRadius() >= peg.radius()
+11
+12 class RoundPeg is
+13   constructor RoundPeg(radius) { ... }
+14
+15   method getRadius() is
+16     // Return the radius of the peg.
+17
+18
+19 // But there's an incompatible class: SquarePeg.
+20 class SquarePeg is
+21   constructor SquarePeg(width) { ... }
+22
+23   method getWidth() is
+24     // Return the square peg width.
+25
+26
+27 // An adapter class lets you fit square pegs into round holes.
+28 // It extends the RoundPeg class to let the adapter objects act
+29 // as round pegs.
+30 class SquarePegAdapter extends RoundPeg is
+31   // In reality, the adapter contains an instance of the
+32   // SquarePeg class.
+33   private field peg: SquarePeg
+34
+35   constructor SquarePegAdapter(peg: SquarePeg) is
+36     this.peg = peg
+37
+38   method getRadius() is
+39     // The adapter pretends that it's a round peg with a
+40     // radius that could fit the square peg that the adapter
+41     // actually wraps.
+42     return peg.getWidth() * Math.sqrt(2) / 2
+43
+44
+45   // Somewhere in client code.
+46   hole = new RoundHole(5)
+47   rpeg = new RoundPeg(5)
+48   hole.fits(rpeg) // true
+49
+50   small_sqpeg = new SquarePeg(5)
+51   large_sqpeg = new SquarePeg(10)
+52   hole.fits(small_sqpeg) // this won't compile (incompatible types)
+53
+54   small_sqpeg_adapter = new SquarePegAdapter(small_sqpeg)
+55   large_sqpeg_adapter = new SquarePegAdapter(large_sqpeg)
+56   hole.fits(small_sqpeg_adapter) // true
+57   hole.fits(large_sqpeg_adapter) // false
+```
+
+## 💡Applicability
+
+* 🐞 **Use the Adapter class when you want to use some existing class, but its interface isn’t compatible with the rest of your code.**
+* ⚡ The Adapter pattern lets you create a middle-layer class that serves as a translator between your code and a legacy class, a 3rd-party class or any other class with a weird interface.
+* 🐞**Use the pattern when you want to reuse several existing subclasses that lack some common functionality that can’t be added to the superclass.**
+  * ⚡ You could extend each subclass and put the missing functionality into new child classes. However, you’ll need to duplicate the code across all of these new classes, which **<u>smells really bad</u>**.
+  * The much more elegant solution would be to put the missing functionality into an adapter class. Then you would wrap objects with missing features inside the adapter, gaining needed features dynamically. For this to work, the target classes must have a common interface, and the adapter’s field should follow that interface. This approach looks very similar to the **<u>Decorator</u>** pattern.
+
+## 📝 How to Implement
+
+1. Make sure that you have at least two classes with incompatible interfaces:
+  1. A useful *service* class, which you can’t change (often 3rd-party, legacy or with lots of existing dependencies).
+  2. One or several *client* classes that would benefit from using the service class.
+2. Declare the client interface and describe how clients communicate with the service.
+3. Create the adapter class and make it follow the client interface. Leave all the methods empty for now.
+4. Add a field to the adapter class to store a reference to the service object. The common practice is to initialize this field via the constructor, but sometimes it’s more convenient to pass it to the adapter when calling its methods.
+5. One by one, implement all methods of the client interface in the adapter class. The adapter should delegate most of the real work to the service object, handling only the interface or data format conversion.
+6. Clients should use the adapter via the client interface. This will let you change or extend the adapters without affecting the client code.
+
+## ⚖️ Pros and Cons
+
+* ✅ *Single Responsibility Principle*: You can separate the interface or data conversion code from the primary business logic of the program.
+* ✅ *Open/Closed Principle*: You can introduce new types of adapters into the program without breaking the existing client code, as long as they work with the adapters through the client interface.
+* ❌ The overall complexity of the code increases because you need to introduce a set of new interfaces and classes. Sometimes it’s simpler just to change the service class so that it matches the rest of your code.
+
+pg 162
