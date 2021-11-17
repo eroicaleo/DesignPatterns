@@ -1934,4 +1934,11 @@ It’s much better to have it within one class.
 * **<u>Facade</u>** defines a new interface for existing objects, whereas **<u>Adapter</u>** tries to make the existing interface usable. *Adapter* usually wraps just one object, while *Facade* works with an entire subsystem of objects.
 * **<u>Bridge</u>**, **<u>State</u>**, **<u>Strategy</u>** (and to some degree **<u>Adapter</u>**) have very similar structures. Indeed, all of these patterns are based on composition, which is delegating work to other objects. However, they all solve different problems. A pattern isn’t just a recipe for structuring your code in a specific way. It can also communicate to other developers the problem the pattern solves.
 
+## Notes on Example Code
+
+### Python Notes <img src="./images/python.gif" style="zoom:25%;" />
+
+* **Usage examples:** The Adapter pattern is pretty common in Python code. It’s very often used in systems based on some legacy code. In such cases, Adapters make legacy code work with modern classes.
+* **Identification:** Adapter is recognizable by a constructor which takes an instance of a different abstract/interface type. When the adapter receives a call to any of its methods, it translates parameters to the appropriate format and then directs the call to one or several methods of the wrapped object.
+
 pg 163
