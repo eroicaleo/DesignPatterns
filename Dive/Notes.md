@@ -1926,4 +1926,12 @@ It’s much better to have it within one class.
 * ✅ *Open/Closed Principle*: You can introduce new types of adapters into the program without breaking the existing client code, as long as they work with the adapters through the client interface.
 * ❌ The overall complexity of the code increases because you need to introduce a set of new interfaces and classes. Sometimes it’s simpler just to change the service class so that it matches the rest of your code.
 
-pg 162
+## ↔️ Relations with Other Patterns
+
+* **<u>Bridge</u>** is usually designed up-front, letting you develop parts of an application independently of each other. On the other hand, **<u>Adapter</u>** is commonly used with an existing app to make some otherwise-incompatible classes work together nicely.
+* **<u>Adapter</u>** changes the interface of an existing object, while **<u>Decorator</u>** enhances an object without changing its interface. In addition, Decorator supports recursive composition, which isn’t possible when you use Adapter.
+* **<u>Adapter</u>** provides a different interface to the wrapped object, **<u>Proxy</u>** provides it with the same interface, and **<u>Decorator</u>** provides it with an enhanced interface.
+* **<u>Facade</u>** defines a new interface for existing objects, whereas **<u>Adapter</u>** tries to make the existing interface usable. *Adapter* usually wraps just one object, while *Facade* works with an entire subsystem of objects.
+* **<u>Bridge</u>**, **<u>State</u>**, **<u>Strategy</u>** (and to some degree **<u>Adapter</u>**) have very similar structures. Indeed, all of these patterns are based on composition, which is delegating work to other objects. However, they all solve different problems. A pattern isn’t just a recipe for structuring your code in a specific way. It can also communicate to other developers the problem the pattern solves.
+
+pg 163
