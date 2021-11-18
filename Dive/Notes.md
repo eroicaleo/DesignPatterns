@@ -1217,7 +1217,7 @@ new House(4,2,4,true,true,true,true,...);
 
 * In this example, we will use the same object construction code to build cars, and create the corresponding manuals for them.
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch17pseudocode.png" style="zoom:50%;" />
+<img src="./images/ch17pseudocode.png" style="zoom:50%;" />
 
 * Car is a complex class, and we don't want to a huge constructor. So we extracted the car assembly code into a separate car builder class. This class has a set of methods for configuring various parts of a car.
 * The client code can work with builder directly or can delegate the assembly to the director class.
@@ -1836,7 +1836,7 @@ It’s much better to have it within one class.
 
 ## ♯Pseudocode
 
-<img src="/Users/yg943079/Prog/DesignPatterns/Dive/images/ch20pcode.png" style="zoom:50%;" />
+<img src="./images/ch20pcode.png" style="zoom:50%;" />
 
 * This example of the **Adapter** pattern is based on the classic conflict between square pegs and round holes.
 * The Adapter pretends to be a round peg, with a radius equal to a half of the square’s diameter (in other words, the radius of the smallest circle that can accommodate the square peg).
@@ -1936,9 +1936,86 @@ It’s much better to have it within one class.
 
 ## Notes on Example Code
 
-### Python Notes <img src="./images/python.gif" style="zoom:25%;" />
+###  <img src="./images/python.gif" style="zoom:25%;" /> Python Notes
 
 * **Usage examples:** The Adapter pattern is pretty common in Python code. It’s very often used in systems based on some legacy code. In such cases, Adapters make legacy code work with modern classes.
 * **Identification:** Adapter is recognizable by a constructor which takes an instance of a different abstract/interface type. When the adapter receives a call to any of its methods, it translates parameters to the appropriate format and then directs the call to one or several methods of the wrapped object.
 
-pg 163
+# Chapter 21 Bridge
+
+**Bridge** is a structural design pattern that lets you split a large class or a set of closely related classes into two separate hierarchies—abstraction and implementation—which can be developed independently of each other.
+
+## 😟 Problem
+
+* We have a class `Shape` and two subclass `Square` and `Circle`. Later we want to incorporate colors, say `Red` and `Blue`, then we need 4 subclasses as shown below.
+
+<img src="./images/ch21problem.png" style="zoom:50%;" />
+
+* Adding new shape types and colors to the hierarchy will grow it exponentially.
+
+## 😃 Solution
+
+* This problem occurs because we’re trying to extend the shape classes in two independent dimensions: by form and by color. That’s a very common issue with class inheritance.
+* The Bridge pattern attempts to solve this problem by switching from inheritance to composition. What this means is that you extract one of the dimensions into a separate class hierarchy, so that the original classes will reference an object of the new hierarchy, instead of having all of its state and behaviors within one class.
+
+<img src="./images/ch21solution.png" style="zoom:50%;" />
+
+* Following this approach, we can extract the color-related code into its own class with two subclasses: `Red` and `Blue` . 
+  * The Shape class then gets a reference field pointing to one of the color objects. Now the shape can delegate any color-related work to the linked color object. 
+  * That reference will act as a bridge between the `Shape` and `Color` classes. From now on, adding new colors won’t require changing the `shape` hierarchy, and vice versa.
+
+pg 166
+
+# Chapter -1
+
+## The meaning of the arrows
+
+* This just copy over the chapter 3 here:
+
+### Association
+
+***Association***: is a type of relationship in which one object uses or interacts with another.
+
+<img src="./images/ch03association.png" style="zoom:50%;" />
+
+The link between the 2 class is ***always*** there. It is similar to a field in a class, but doesn't always have to be. It can be a method that returns a object, e.g. an order have a method to return its customer.
+
+注意这里的重点是***link is always there***.
+
+### Dependency
+
+***Dependency***: a weaker variant of association that usually implies that there’s no permanent link between objects.
+
+Dependency typically (but not always) implies that an object accepts another object as a method parameter, instantiates, or uses another object.
+
+比association宽泛，比如在一个method里作为参数。或者在一个method里，instantiates另一个类。这里method结束了，另一个class object就没有了。
+
+Here’s how you can spot a dependency between classes: **a dependency exists between two classes if changes to the definition of one class result in modifications in another class.**
+
+<img src="./images/ch03dependency.png" style="zoom:50%;" />
+
+### Composition
+
+***Composition***: "whole-part" relationship between two objects, one of which is composed of one or more instances of the other.
+
+The distinction between this relation and others is that the component can only exist as a part of the container.
+
+如下图，没有学校就没有系。
+
+<img src="./images/ch03composition.png" style="zoom:50%;" />
+
+### Aggregation
+
+***Aggregation***: One object merely contains a reference to another. The container doesn’t control the life cycle of the component. The component can exist without the container and can be linked to several containers at the same time.
+
+没有了系，老师这个类还可以存在。可以换一个学校等等。
+
+<img src="./images/ch03aggregation.png" style="zoom:50%;" />
+
+### Inheritance
+
+<img src="./images/ch01UML02.png" style="zoom:50%;" />
+
+### Implementation of an interface
+
+<img src="./images/Airport.png" style="zoom:50%;" />
