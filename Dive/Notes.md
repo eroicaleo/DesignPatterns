@@ -1964,6 +1964,23 @@ It’s much better to have it within one class.
   * The Shape class then gets a reference field pointing to one of the color objects. Now the shape can delegate any color-related work to the linked color object. 
   * That reference will act as a bridge between the `Shape` and `Color` classes. From now on, adding new colors won’t require changing the `shape` hierarchy, and vice versa.
 
+### Abstraction and Implementation
+
+* *Abstraction* (also called *interface*) is a high-level control layer for some entity. This layer isn’t supposed to do any real work on its own. It should delegate the work to the *implementation* layer (also called *platform*).
+  * Note that we’re not talking about *interfaces* or *abstract classes* from your programming language. These aren’t the same things.
+* When talking about real applications, the abstraction can be represented by a graphical user interface (GUI), and the implementation could be the underlying operating system code (API) which the GUI layer calls in response to user interactions.
+* We need to extend our app in 2 independent directions:
+  * Have several different GUIs (for instance, tailored for regular customers or admins).
+  * Support several different APIs (for example, to be able to launch the app under Windows, Linux, and MacOS).
+* Let’s try to solve this issue with the Bridge pattern. It suggests that we divide the classes into two hierarchies:
+  * Abstraction: the GUI layer of the app.
+  * Implementation: the operating systems’ APIs.
+
+<img src="./images/ch21AbstractionImplementation.png" style="zoom:50%;" />
+
+* The abstraction object controls the appearance of the app, delegating the actual work to the linked implementation object. Different implementations are interchangeable as long as they follow a common interface, enabling the same GUI to work under Windows and Linux.
+* As a result, you can change the GUI classes without touching the API-related classes. Moreover, adding support for another operating system only requires creating a subclass in the implementation hierarchy.
+
 pg 166
 
 # Chapter -1
