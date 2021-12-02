@@ -1993,6 +1993,40 @@ It’s much better to have it within one class.
 * **Refined Abstractions** provide variants of control logic. Like their parent, they work with different implementations via the general implementation interface.
 * Usually, the **Client** is only interested in working with the abstraction. However, it’s the client’s job to link the abstraction object with one of the implementation objects.
 
+## ♯Pseudocode
+
+* `Bridge` pattern can help divide the monolithic code of an app that manages devices and their remote controls. The `Device` classes act as the implementation, whereas the `Remote`s act as the abstraction.
+* The base remote control class declares a reference field that links it with a device object. All remotes work with the devices via the general device interface, which lets the same remote support multiple device types.
+
+<img src="./images/ch21pseudocode.png" style="zoom:50%;" />
+
+* You can develop the remote control classes independently from the device classes. All that’s needed is to create a new remote subclass. For example, a basic remote control might only have two buttons, but you could extend it with additional features, such as an extra battery or a touchscreen.
+* The client code links the desired type of remote control with a specific device object via the remote’s constructor.
+
+```java
+ 1 // The "abstraction" defines the interface for the "control"
+ 2 // part of the two class hierarchies. It maintains a reference
+ 3 // to an object of the "implementation" hierarchy and delegates
+ 4 // all of the real work to this object.
+ 5 class RemoteControl is
+ 6   protected field device: Device
+ 7   constructor RemoteControl(device: Device) is
+ 8     this.device = device
+ 9   method togglePower() is
+10     if (device.isEnabled()) then
+11       device.disable()
+12     else
+13       device.enable()
+14   method volumeDown() is
+15     device.setVolume(device.getVolume() - 10)
+16   method volumeUp() is
+17     device.setVolume(device.getVolume() + 10)
+18   method channelDown() is
+19     device.setChannel(device.getChannel() - 1)
+20   method channelUp() is
+21     device.setChannel(device.getChannel() + 1)
+```
+
 pg 166
 
 # Chapter -1
