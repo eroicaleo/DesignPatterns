@@ -1981,6 +1981,18 @@ It’s much better to have it within one class.
 * The abstraction object controls the appearance of the app, delegating the actual work to the linked implementation object. Different implementations are interchangeable as long as they follow a common interface, enabling the same GUI to work under Windows and Linux.
 * As a result, you can change the GUI classes without touching the API-related classes. Moreover, adding support for another operating system only requires creating a subclass in the implementation hierarchy.
 
+## 🌲 Structure
+
+<img src="./images/ch21structure.png" style="zoom:50%;" />
+
+* The **Abstraction** provides high-level control logic. It relies on the implementation object to do the actual low-level work.
+* The **Implementation** declares the interface that’s common for all concrete implementations. An abstraction can only communicate with an implementation object via methods that are declared here.
+  * The abstraction may list the same methods as the implementation, but usually the abstraction declares some complex behaviors that rely on a wide variety of primitive operations declared by the implementation.
+  * 例如在这个例子里，`feature1` and `feature2` 就是complex behaviors。
+* **Concrete Implementations** contain platform-specific code.
+* **Refined Abstractions** provide variants of control logic. Like their parent, they work with different implementations via the general implementation interface.
+* Usually, the **Client** is only interested in working with the abstraction. However, it’s the client’s job to link the abstraction object with one of the implementation objects.
+
 pg 166
 
 # Chapter -1
