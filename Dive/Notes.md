@@ -2067,7 +2067,19 @@ It’s much better to have it within one class.
 61 remote = new AdvancedRemoteControl(radio)
 ```
 
-pg 173
+## 💡Applicability
+
+* 🐞 **Use the Bridge pattern when you want to divide and organize a monolithic class that has several variants of some functionality (for example, if the class can work with various database servers).**
+* ⚡ class 越大越不容易弄清楚，要改起来越不容易。可能会牵一发而动全身，容易出错。
+* The Bridge pattern lets you split the monolithic class into several class hierarchies. After this, you can change the classes in each hierarchy independently of the classes in the others.
+  * 有利于代码维护，减少错误。
+* 🐞 **Use the pattern when you need to extend a class in several orthogonal (independent) dimensions.**
+* ⚡The Bridge suggests that you extract a separate class hierarchy for each of the dimensions. 比如颜色是一个纬度，形状是另一个纬度。The original class delegates the related work to the objects belonging to those hierarchies instead of doing everything on its own.
+* 🐞 **Use the Bridge if you need to be able to switch implementations at runtime.**
+* ⚡ Although it’s optional, the Bridge pattern lets you replace the implementation object inside the abstraction. It’s as easy as assigning a new value to a field.
+* *By the way, this last item is the main reason why so many people confuse the Bridge with the **<u>Strategy</u>** pattern. Remember that a pattern is more than just a certain way to structure your classes. It may also communicate intent and a problem being addressed.*
+
+pg 175
 
 # Chapter -1
 
