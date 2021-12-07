@@ -2025,9 +2025,49 @@ It’s much better to have it within one class.
 19     device.setChannel(device.getChannel() - 1)
 20   method channelUp() is
 21     device.setChannel(device.getChannel() + 1)
+22
+23
+24 // You can extend classes from the abstraction hierarchy
+25 // independently from device classes.
+26 class AdvancedRemoteControl extends RemoteControl is
+27   method mute() is
+28     device.setVolume(0)
+29
+30
+31 // The "implementation" interface declares methods common to all
+32 // concrete implementation classes. It doesn't have to match the
+33 // abstraction's interface. In fact, the two interfaces can be
+34 // entirely different. Typically the implementation interface
+35 // provides only primitive operations, while the abstraction
+36 // defines higher-level operations based on those primitives.
+37 interface Device is
+38   method isEnabled()
+39   method enable()
+40   method disable()
+41   method getVolume()
+42   method setVolume(percent)
+43   method getChannel()
+44   method setChannel(channel)
+45
+46
+47 // All devices follow the same interface.
+48 class Tv implements Device is
+49   // ...
+50
+51 class Radio implements Device is
+52   // ...
+53
+54
+55 // Somewhere in client code.
+56 tv = new Tv()
+57 remote = new RemoteControl(tv)
+58 remote.togglePower()
+59
+60 radio = new Radio()
+61 remote = new AdvancedRemoteControl(radio)
 ```
 
-pg 166
+pg 173
 
 # Chapter -1
 
